@@ -1,0 +1,604 @@
+---
+title: "SFC model presentation"
+format: 
+  html:
+    self-contained: true
+    page-layout: full
+    embed-resources: true
+---
+
+```{=html}
+<style>
+  /* Common styles for both matrices */
+  .matrix-table {
+    width: 100%;
+    table-layout: fixed;
+    margin: 30px 0;
+    font-size: 14px;
+    border-collapse: collapse;
+    border-spacing: 0;
+    border: none !important;
+  }
+  .matrix-table th:first-child,
+  .matrix-table td:first-child {
+    width: 140px;
+    text-align: left;
+    white-space: nowrap;
+    padding-left: 10px;
+  }
+  .matrix-table th, 
+  .matrix-table td {
+    padding: 10px 6px;
+    min-width: 100px;
+    white-space: nowrap;
+    text-align: center;
+    border: none !important;
+  }
+  
+  /* Header styling - Line below the entire header section */
+  .matrix-table thead {
+    border-bottom: 1px solid black !important;
+    margin-bottom: 10px; /* Add space between header line and body */
+  }
+  .matrix-table thead th {
+    border-bottom: none !important; /* Remove borders from individual header cells */
+    padding-bottom: 12px; 
+  }
+  
+  /* Last row styling - Line above sum row */
+  .matrix-table tbody tr:last-child {
+    border-top: 1px solid black !important;
+  }
+  
+  /* Specific for transaction matrix complex header */
+  /* Remove default border and prepare for pseudo-element */
+  .transaction-matrix thead tr:first-child th.col-group {
+    border-bottom: none !important; 
+    position: relative; /* Needed for positioning ::after */
+    padding-bottom: 8px; /* Keep original padding */
+  }
+  /* Add the shorter line using ::after */
+  .transaction-matrix thead tr:first-child th.col-group::after {
+    content: '';
+    display: block; /* To control width and margin */
+    width: 75%; /* Shorten the line */
+    height: 1px; /* Thickness */
+    background-color: black; /* Color */
+    margin: 4px auto 0; /* Center horizontally, add space below text */
+  }
+   /* Ensure sub-headers have necessary padding but no bottom border */
+   .transaction-matrix thead tr:last-child th {
+     border-bottom: none !important; 
+     padding-bottom: 12px;
+   }
+  
+  /* Common text formatting */
+  .text-center {
+    text-align: center;
+  }
+  .col-group {
+    text-align: center;
+    padding-bottom: 8px;
+  }
+  sup, sub {
+    font-size: 75%;
+    position: relative;
+    vertical-align: baseline;
+    line-height: 0;
+  }
+  sup { top: -0.5em; }
+  sub { bottom: -0.25em; }
+  .formula {
+    white-space: nowrap;
+    display: inline-block;
+    letter-spacing: 0.5px;
+  }
+  /* Delta row divider */
+  .delta-divider {
+    border-top: 1px solid black !important;
+  }
+  /* Container fixes */
+  body {
+    max-width: none !important; /* Allow body to expand */
+    width: 100%;
+  }
+  .container-fluid {
+    max-width: none !important; /* Allow container to expand */
+    padding: 0 !important;
+    margin: 0 !important;
+  }
+  
+  /* Column width adjustments */
+  .col-households { min-width: 120px; }
+  .col-firms { min-width: 90px; }
+  .col-government { min-width: 100px; }
+  .col-banks { min-width: 110px; }
+  .col-central { min-width: 110px; }
+  
+  @media print {
+    body { width: 100%; }
+    .matrix-table { width: 100%; font-size: 10pt; }
+  }
+</style>
+
+## Balance sheet matrix
+
+<div style="width: 100%; overflow-x: auto; margin: 0; padding: 0;">
+<table class="matrix-table balance-matrix">
+  <thead>
+    <tr>
+      <th></th>
+      <th>East<br>households</th>
+      <th>West<br>households</th>
+      <th class="col-firms">East<br>Firms</th>
+      <th class="col-firms">West<br>Firms</th>
+      <th class="col-banks">Banks</th>
+      <th class="col-central">Central<br>bank</th>
+      <th class="col-government">Government</th>
+      <th>Σ</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Money deposits</td>
+      <td>+M<sup>E</sup></td>
+      <td>+M<sup>W</sup></td>
+      <td></td>
+      <td></td>
+      <td><span class="formula">-M</span></td>
+      <td></td>
+      <td></td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>Loans</td>
+      <td></td>
+      <td></td>
+      <td>-L<sup>E</sup></td>
+      <td>-L<sup>W</sup></td>
+      <td><span class="formula">+L</span></td>
+      <td></td>
+      <td></td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>Cash</td>
+      <td>+H<sup>E</sup></td>
+      <td>+H<sup>W</sup></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td><span class="formula">-H</span></td>
+      <td></td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>Bonds</td>
+      <td>+B<sup>E</sup></td>
+      <td>+B<sup>W</sup></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>+B</td>
+      <td>-B</td>
+      <td>0</td>
+    </tr>
+    <tr>
+      <td>Fixed capital</td>
+      <td></td>
+      <td></td>
+      <td>K<sup>E</sup></td>
+      <td>K<sup>W</sup></td>
+      <td></td>
+      <td></td>
+      <td></td>
+      <td>K</td>
+    </tr>
+    <tr>
+      <td>Balance (net worth)</td>
+      <td>-V<sup>E</sup></td>
+      <td>-V<sup>W</sup></td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>-V</td>
+      <td>-K</td>
+    </tr>
+    <tr>
+      <td>Σ</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+      <td>0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+## Transaction flow matrix
+
+<div style="width: 100%; overflow-x: auto; margin: 0; padding: 0;">
+<table class="matrix-table transaction-matrix">
+  <thead>
+    <tr>
+      <th></th>
+      <th class="text-center col-households" rowspan="2">East<br>Households</th>
+      <th class="text-center col-group" colspan="2">East Firms</th>
+      <th class="text-center" rowspan="2">West<br>Households</th>
+      <th class="text-center col-group" colspan="2">West Firms</th>
+      <th class="text-center" rowspan="2">Government</th>
+      <th class="text-center col-group" colspan="2">Commercial Banks</th>
+      <th class="text-center" rowspan="2">Central<br>Bank</th>
+      <th class="text-center" rowspan="2">Σ</th>
+    </tr>
+    <tr>
+      <th class="text-center col-firms"></th>
+      <th class="text-center col-firms">Current</th>
+      <th class="text-center col-firms">Capital</th>
+      <th class="text-center col-firms">Current</th>
+      <th class="text-center col-firms">Capital</th>
+      <th class="text-center col-banks">Current</th>
+      <th class="text-center col-banks">Capital</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <td>Consumption</td>
+      <td class="text-center">-C<sup>E</sup></td>
+      <td class="text-center">+C<sup>E</sup></td>
+      <td class="text-center"></td>
+      <td class="text-center">-C<sup>W</sup></td>
+      <td class="text-center">+C<sup>W</sup></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center">0</td>
+    </tr>
+    <tr>
+      <td>Investment</td>
+      <td class="text-center"></td>
+      <td class="text-center">+I<sup>E</sup></td>
+      <td class="text-center">-I<sup>E</sup></td>
+      <td class="text-center"></td>
+      <td class="text-center">+I<sup>W</sup></td>
+      <td class="text-center">-I<sup>W</sup></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center">0</td>
+    </tr>
+    <tr>
+      <td>Govt. exp.</td>
+      <td class="text-center"></td>
+      <td class="text-center">+G<sup>E</sup></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center">+G<sup>W</sup></td>
+      <td class="text-center"></td>
+      <td class="text-center">-G</td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center">0</td>
+    </tr>
+    <tr>
+      <td>E Exports to W</td>
+      <td class="text-center"></td>
+      <td class="text-center">+X<sup>E</sup></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center">-IM<sup>W</sup></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center">0</td>
+    </tr>
+    <tr>
+      <td>W Exports to E</td>
+      <td class="text-center"></td>
+      <td class="text-center">-IM<sup>E</sup></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center">+X<sup>W</sup></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center">0</td>
+    </tr>
+    <tr>
+      <td>[GDP]</td>
+      <td class="text-center"></td>
+      <td class="text-center">[Y<sup>E</sup>]</td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center">[Y<sup>W</sup>]</td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+    </tr>
+    <tr>
+      <td>Wages</td>
+      <td class="text-center">+WB<sup>E</sup></td>
+      <td class="text-center">-WB<sup>E</sup></td>
+      <td class="text-center"></td>
+      <td class="text-center">+WB<sup>W</sup></td>
+      <td class="text-center">-WB<sup>W</sup></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center">0</td>
+    </tr>
+    <tr>
+      <td>Depreciation</td>
+      <td class="text-center"></td>
+      <td class="text-center">-AF<sup>E</sup></td>
+      <td class="text-center">+AF<sup>E</sup></td>
+      <td class="text-center"></td>
+      <td class="text-center">-AF<sup>W</sup></td>
+      <td class="text-center">+AF<sup>W</sup></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center">0</td>
+    </tr>
+    <tr>
+      <td>Net transfer</td>
+      <td class="text-center">-NT</td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center">+NT</td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center">0</td>
+    </tr>
+    <tr>
+      <td>Interest on</td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+    </tr>
+    <tr>
+      <td>Loan</td>
+      <td class="text-center"></td>
+      <td class="text-center"><span class="formula">-r<sub>-1</sub>·L<sup>E</sup><sub>-1</sub></span></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"><span class="formula">-r<sub>-1</sub>·L<sup>W</sup><sub>-1</sub></span></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"><span class="formula">+r<sub>-1</sub>L<sub>-1</sub></span></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center">0</td>
+    </tr>
+    <tr>
+      <td>Deposit</td>
+      <td class="text-center"><span class="formula">+r<sub>-1</sub>·M<sup>E</sup><sub>-1</sub></span></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"><span class="formula">+r<sub>-1</sub>·M<sup>W</sup><sub>-1</sub></span></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"><span class="formula">-r<sub>-1</sub>·M<sub>-1</sub></span></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center">0</td>
+    </tr>
+    <tr>
+      <td>Bond</td>
+      <td class="text-center"><span class="formula">+r<sub>-1</sub>·B<sup>E</sup><sub>-1</sub></span></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"><span class="formula">+r<sub>-1</sub>·B<sup>W</sup><sub>-1</sub></span></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"><span class="formula">-r<sub>-1</sub>B<sub>-1</sub></span></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"><span class="formula">+r<sub>-1</sub>·B<sub>-1</sub></span></td>
+      <td class="text-center">0</td>
+    </tr>
+    <tr>
+      <td>Profits</td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"><span class="formula">+r<sub>-1</sub>·B<sub>-1</sub></span></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"><span class="formula">-r<sub>-1</sub>·B<sub>-1</sub></span></td>
+      <td class="text-center">0</td>
+    </tr>
+    <tr>
+      <td>Taxes</td>
+      <td class="text-center">-T<sup>E</sup></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center">-T<sup>W</sup></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center">+T</td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center">0</td>
+    </tr>
+    <tr class="delta-divider" style="border-top: 1px solid black !important;">
+      <td>Δ Cash</td>
+      <td class="text-center"><span class="formula">-ΔH<sup>E</sup></span></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"><span class="formula">-ΔH<sup>W</sup></span></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"><span class="formula">+ΔH</span></td>
+      <td class="text-center">0</td>
+    </tr>
+    <tr>
+      <td>Δ Loans</td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"><span class="formula">+ΔL<sup>E</sup></span></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"><span class="formula">+ΔL<sup>W</sup></span></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"><span class="formula">-ΔL</span></td>
+      <td class="text-center"></td>
+      <td class="text-center">0</td>
+    </tr>
+    <tr>
+      <td>Δ Deposits</td>
+      <td class="text-center"><span class="formula">-ΔM<sup>E</sup></span></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"><span class="formula">-ΔM<sup>W</sup></span></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"><span class="formula">+ΔM</span></td>
+      <td class="text-center"></td>
+      <td class="text-center">0</td>
+    </tr>
+    <tr>
+      <td>Δ Bonds</td>
+      <td class="text-center"><span class="formula">-ΔB<sup>E</sup></span></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"><span class="formula">-ΔB<sup>W</sup></span></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"><span class="formula">+ΔB</span></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"><span class="formula">-ΔB</span></td>
+      <td class="text-center">0</td>
+    </tr>
+    <tr style="border-top: 1px solid black !important;">
+      <td>Σ</td>
+      <td class="text-center">0</td>
+      <td class="text-center">0</td>
+      <td class="text-center">0</td>
+      <td class="text-center">0</td>
+      <td class="text-center">0</td>
+      <td class="text-center">0</td>
+      <td class="text-center">0</td>
+      <td class="text-center">0</td>
+      <td class="text-center">0</td>
+      <td class="text-center">0</td>
+      <td class="text-center">0</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
+## Behavioral and accounting equations
+### Exogenous variables
+
+| Parameter | Description | Region |
+|-----------|-------------|--------|
+| $\theta$ | Tax rate | Global |
+| $\alpha_0$ | Autonomous consumption | Global |
+| $\alpha_1^E$ | Propensity to consume out of wages | East |
+| $\alpha_1^W$ | Propensity to consume out of wages | West |
+| $\alpha_2^E$ | Propensity to consume out of transfer payments | East |
+| $\alpha_3^E$ | Propensity to consume out of net worth | East |
+| $\alpha_3^W$ | Propensity to consume out of net worth | West |
+| $\delta$ | Depreciation rate | Global |
+| $k$ | Target capital-output ratio | Global |
+| $\gamma$ | Adjustment parameter towards target capital stock | Global |
+| $\mu^E$ | Import propensity | East |
+| $\mu^W$ | Import propensity | West |
+| $\beta$ | Transfer rate on wages | Global |
+| $G^E$ | Government expenditure | East |
+| $G^W$ | Government expenditure | West |
+| $r_d$ | Interest rate on deposits | Global |
+| $r_b$ | Interest rate on bonds | Global |
+
+### Consumption
+$$ C^E = \alpha_0 + (1-\theta)(\alpha_1^E \cdot WB^E + \alpha_3^E \cdot R^E) \tag{1}$$
+
+$$ C^W = \alpha_0 + (1-\theta)[\alpha_1^W \cdot WB^W + \alpha_2^W \cdot NT + \alpha_3^W \cdot (+r_{-1}·ME_{-1} + r_{-1}·BE_{-1})] \tag{2} $$
+
+### Capital Investment
+
+$$AF^E = \delta \cdot K^E_{-1} \tag{3}$$
+
+$$AF^W = \delta \cdot K^W_{-1} \tag{4}$$
+
+$$K^T_E = k \cdot Y^E_{-1} \tag{5}$$
+
+$$K^T_W = k \cdot Y^W_{-1} \tag{6}$$
+
+$$I^E = \gamma \cdot (K^T_E - K^E_{-1}) + AF^E \tag{7}$$
+
+$$I^W = \gamma \cdot (K^T_W - K^W_{-1}) + AF^W \tag{8}$$
+
+$$K^E = K^E_{-1} + I^E - AF^E \tag{9}$$
+
+$$K^W = K^W_{-1} + I^W - AF^W \tag{10}$$
+
+
+### Trade and transfers
+
+$$IM^E = \mu^E \cdot Y^E \cdot (1-\theta) \tag{11}$$
+
+$$IM^W = \mu^W \cdot Y^W \cdot (1-\theta) \tag{12}$$
+
+$$X^E = IM^W \tag{13}$$
+
+$$X^W = IM^E \tag{14}$$
+
+$$NT = WB^E \cdot \beta \tag{15}$$
+
+### Interest payments
+
+
+### Government
+$$Y^E = C^E + I^E + G^E + X^E - IM^E \tag{16}$$
+
+$$Y^W = C^W + I^W + G^W + X^W - IM^W \tag{17}$$
+
+$$T^E = Y^E \cdot \theta \tag{18}$$
+
+$$T^W = Y^W \cdot \theta \tag{19}$$
+
