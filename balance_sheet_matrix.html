@@ -3234,6 +3234,7 @@ border: none !important;
 
 .matrix-table thead {
 border-bottom: 1px solid black !important;
+border-top: 1px solid black !important;
 margin-bottom: 10px; 
 }
 .matrix-table thead th {
@@ -3242,6 +3243,10 @@ padding-bottom: 12px; }
 
 .matrix-table tbody tr:last-child {
 border-top: 1px solid black !important;
+}
+
+.matrix-table tbody tr:last-child {
+border-bottom: 1px solid black !important;
 }
 
 
@@ -3307,7 +3312,15 @@ margin: 0 !important;
 body { width: 100%; }
 .matrix-table { width: 100%; font-size: 10pt; }
 }
+
+.capital-gain-row {
+border-bottom: 1px solid black !important;
+}
 </style>
+<section id="introduction" class="level2">
+<h2 class="anchored" data-anchor-id="introduction">Introduction</h2>
+<p>This models builds upon models LP, REG and BMW. The two regions have uneuqal development pace, and the east is developing faster, as in the case of the reforming China. The migrant workers remit money to from the east to the west, while we assume there is no migration in the other direction.</p>
+</section>
 <section id="balance-sheet-matrix" class="level2">
 <h2 class="anchored" data-anchor-id="balance-sheet-matrix">Balance sheet matrix</h2>
 <div style="width: 100%; overflow-x: auto; margin: 0; padding: 0;">
@@ -3361,6 +3374,7 @@ Money deposits
 <span class="formula">-M</span>
 </td>
 <td>
++M<sup>CB</sup>
 </td>
 <td>
 </td>
@@ -3438,7 +3452,7 @@ Bonds
 +B
 </td>
 <td>
--B
+-B<sup>CB</sup>
 </td>
 <td>
 0
@@ -3491,7 +3505,7 @@ Balance (net worth)
 0
 </td>
 <td>
--V
+-V<sup>gov</sup>
 </td>
 <td>
 -K
@@ -3899,21 +3913,21 @@ Loan
 <td class="text-center">
 </td>
 <td class="text-center">
-<span class="formula">-r<sub>-1</sub>·L<sup>E</sup><sub>-1</sub></span>
+<span class="formula">-r<sub>l-1</sub>·L<sup>E</sup><sub>-1</sub></span>
 </td>
 <td class="text-center">
 </td>
 <td class="text-center">
 </td>
 <td class="text-center">
-<span class="formula">-r<sub>-1</sub>·L<sup>W</sup><sub>-1</sub></span>
+<span class="formula">-r<sub>l-1</sub>·L<sup>W</sup><sub>-1</sub></span>
 </td>
 <td class="text-center">
 </td>
 <td class="text-center">
 </td>
 <td class="text-center">
-<span class="formula">+r<sub>-1</sub>L<sub>-1</sub></span>
+<span class="formula">+r<sub>l-1</sub>L<sub>-1</sub></span>
 </td>
 <td class="text-center">
 </td>
@@ -3928,14 +3942,14 @@ Loan
 Deposit
 </td>
 <td class="text-center">
-<span class="formula">+r<sub>-1</sub>·M<sup>E</sup><sub>-1</sub></span>
+<span class="formula">+r<sub>d-1</sub>·M<sup>E</sup><sub>-1</sub></span>
 </td>
 <td class="text-center">
 </td>
 <td class="text-center">
 </td>
 <td class="text-center">
-<span class="formula">+r<sub>-1</sub>·M<sup>W</sup><sub>-1</sub></span>
+<span class="formula">+r<sub>d-1</sub>·M<sup>W</sup><sub>-1</sub></span>
 </td>
 <td class="text-center">
 </td>
@@ -3944,11 +3958,12 @@ Deposit
 <td class="text-center">
 </td>
 <td class="text-center">
-<span class="formula">-r<sub>-1</sub>·M<sub>-1</sub></span>
+<span class="formula">-r<sub>d-1</sub>·M<sub>-1</sub></span>
 </td>
 <td class="text-center">
 </td>
 <td class="text-center">
+<span class="formula">+r<sub>d-1</sub>·M<sup>CB</sup><sub>-1</sub></span>
 </td>
 <td class="text-center">
 0
@@ -3959,28 +3974,28 @@ Deposit
 Bond
 </td>
 <td class="text-center">
-<span class="formula">+r<sub>-1</sub>·B<sup>E</sup><sub>-1</sub></span>
+<span class="formula">+B<sup>E</sup><sub>-1</sub></span>
 </td>
 <td class="text-center">
 </td>
 <td class="text-center">
 </td>
 <td class="text-center">
-<span class="formula">+r<sub>-1</sub>·B<sup>W</sup><sub>-1</sub></span>
+<span class="formula">+B<sup>W</sup><sub>-1</sub></span>
 </td>
 <td class="text-center">
 </td>
 <td class="text-center">
 </td>
 <td class="text-center">
-<span class="formula">-r<sub>-1</sub>B<sub>-1</sub></span>
+<span class="formula">-B<sub>-1</sub></span>
 </td>
 <td class="text-center">
 </td>
 <td class="text-center">
 </td>
 <td class="text-center">
-<span class="formula">+r<sub>-1</sub>·B<sub>-1</sub></span>
+<span class="formula">+B<sup>CB</sup><sub>-1</sub></span>
 </td>
 <td class="text-center">
 0
@@ -4003,14 +4018,14 @@ Profits
 <td class="text-center">
 </td>
 <td class="text-center">
-<span class="formula">+r<sub>-1</sub>·B<sub>-1</sub></span>
+<span class="formula">+B<sup>CB</sup><sub>-1</sub></span>
 </td>
 <td class="text-center">
 </td>
 <td class="text-center">
 </td>
 <td class="text-center">
-<span class="formula">-r<sub>-1</sub>·B<sub>-1</sub></span>
+<span class="formula">-B<sup>CB</sup><sub>-1</sub>-r<sub>d-1</sub>·M<sup>CB</sup><sub>-1</sub></span>
 </td>
 <td class="text-center">
 0
@@ -4045,6 +4060,36 @@ Taxes
 </td>
 <td class="text-center">
 0
+</td>
+</tr>
+<tr>
+<td>
+[Disposable income]
+</td>
+<td class="text-center">
+[DI<sup>E</sup>]
+</td>
+<td class="text-center">
+</td>
+<td class="text-center">
+</td>
+<td class="text-center">
+[DI<sup>W</sup>]
+</td>
+<td class="text-center">
+</td>
+<td class="text-center">
+</td>
+<td class="text-center">
+</td>
+<td class="text-center">
+</td>
+<td class="text-center">
+</td>
+<td class="text-center">
+</td>
+<td class="text-center">
+[DI]
 </td>
 </tr>
 <tr class="delta-divider" style="border-top: 1px solid black !important;">
@@ -4135,6 +4180,7 @@ Taxes
 <span class="formula">+ΔM</span>
 </td>
 <td class="text-center">
+<span class="formula">+ΔM<sup>CB</sup></span>
 </td>
 <td class="text-center">
 0
@@ -4145,28 +4191,28 @@ Taxes
 Δ Bonds
 </td>
 <td class="text-center">
-<span class="formula">-ΔB<sup>E</sup></span>
+<span class="formula">-p_b·ΔB<sup>E</sup></span>
 </td>
 <td class="text-center">
 </td>
 <td class="text-center">
 </td>
 <td class="text-center">
-<span class="formula">-ΔB<sup>W</sup></span>
+<span class="formula">-p_b·ΔB<sup>W</sup></span>
 </td>
 <td class="text-center">
 </td>
 <td class="text-center">
 </td>
 <td class="text-center">
-<span class="formula">+ΔB</span>
+<span class="formula">+p_b·ΔB</span>
 </td>
 <td class="text-center">
 </td>
 <td class="text-center">
 </td>
 <td class="text-center">
-<span class="formula">-ΔB</span>
+<span class="formula">-p_b·ΔB</span>
 </td>
 <td class="text-center">
 0
@@ -4210,6 +4256,38 @@ Taxes
 0
 </td>
 </tr>
+<tr class="capital-gain-row">
+<td>
+Capital gain
+</td>
+<td class="text-center">
+<span class="formula">+Δp_b·B<sup>E</sup><sub>-1</sub></span>
+</td>
+<td class="text-center">
+</td>
+<td class="text-center">
+</td>
+<td class="text-center">
+<span class="formula">+Δp_b·B<sup>W</sup><sub>-1</sub></span>
+</td>
+<td class="text-center">
+</td>
+<td class="text-center">
+</td>
+<td class="text-center">
+<span class="formula">-Δp_b·B<sub>-1</sub></span>
+</td>
+<td class="text-center">
+</td>
+<td class="text-center">
+</td>
+<td class="text-center">
+<span class="formula">+Δp_b·B<sup>CB</sup><sub>-1</sub></span>
+</td>
+<td class="text-center">
+0
+</td>
+</tr>
 </tbody>
 </table>
 </div>
@@ -4220,139 +4298,188 @@ Taxes
 <h3 class="anchored" data-anchor-id="exogenous-variables">Exogenous variables</h3>
 <table class="caption-top table">
 <colgroup>
-<col style="width: 34%">
-<col style="width: 40%">
-<col style="width: 25%">
+<col style="width: 45%">
+<col style="width: 54%">
 </colgroup>
 <thead>
 <tr class="header">
 <th>Parameter</th>
 <th>Description</th>
-<th>Region</th>
 </tr>
 </thead>
 <tbody>
 <tr class="odd">
 <td><span class="math inline">\(\theta\)</span></td>
 <td>Tax rate</td>
-<td>Global</td>
 </tr>
 <tr class="even">
-<td><span class="math inline">\(\alpha_0\)</span></td>
-<td>Autonomous consumption</td>
-<td>Global</td>
+<td><span class="math inline">\(\alpha_0^E\)</span>, <span class="math inline">\(\alpha_0^W\)</span></td>
+<td>Autonomous consumption (East, West)</td>
 </tr>
 <tr class="odd">
-<td><span class="math inline">\(\alpha_1^E\)</span></td>
-<td>Propensity to consume out of wages</td>
-<td>East</td>
+<td><span class="math inline">\(\alpha_1^E\)</span>, <span class="math inline">\(\alpha_1^W\)</span></td>
+<td>Propensity to consume out of wages (East, West)</td>
 </tr>
 <tr class="even">
-<td><span class="math inline">\(\alpha_1^W\)</span></td>
-<td>Propensity to consume out of wages</td>
-<td>West</td>
-</tr>
-<tr class="odd">
 <td><span class="math inline">\(\alpha_2^E\)</span></td>
-<td>Propensity to consume out of transfer payments</td>
-<td>East</td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(\alpha_3^E\)</span></td>
-<td>Propensity to consume out of net worth</td>
-<td>East</td>
+<td>Propensity to consume out of transfer payments (East)</td>
 </tr>
 <tr class="odd">
-<td><span class="math inline">\(\alpha_3^W\)</span></td>
-<td>Propensity to consume out of net worth</td>
-<td>West</td>
+<td><span class="math inline">\(\alpha_3^E\)</span>, <span class="math inline">\(\alpha_3^W\)</span></td>
+<td>Propensity to consume out of net worth (East, West)</td>
 </tr>
 <tr class="even">
+<td><span class="math inline">\(\alpha_4^E\)</span>, <span class="math inline">\(\alpha_4^W\)</span></td>
+<td>Propensity to consume out of past period’s net worth (East, West)</td>
+</tr>
+<tr class="odd">
 <td><span class="math inline">\(\delta\)</span></td>
 <td>Depreciation rate</td>
-<td>Global</td>
 </tr>
-<tr class="odd">
+<tr class="even">
 <td><span class="math inline">\(k\)</span></td>
 <td>Target capital-output ratio</td>
-<td>Global</td>
-</tr>
-<tr class="even">
-<td><span class="math inline">\(\gamma\)</span></td>
-<td>Adjustment parameter towards target capital stock</td>
-<td>Global</td>
 </tr>
 <tr class="odd">
-<td><span class="math inline">\(\mu^E\)</span></td>
-<td>Import propensity</td>
-<td>East</td>
+<td><span class="math inline">\(\gamma\)</span></td>
+<td>Adjustment parameter towards target capital stock</td>
 </tr>
 <tr class="even">
-<td><span class="math inline">\(\mu^W\)</span></td>
-<td>Import propensity</td>
-<td>West</td>
+<td><span class="math inline">\(\mu^E\)</span>, <span class="math inline">\(\mu^W\)</span></td>
+<td>Import propensity (East, West)</td>
 </tr>
 <tr class="odd">
 <td><span class="math inline">\(\beta\)</span></td>
 <td>Transfer rate on wages</td>
-<td>Global</td>
 </tr>
 <tr class="even">
-<td><span class="math inline">\(G^E\)</span></td>
-<td>Government expenditure</td>
-<td>East</td>
+<td><span class="math inline">\(G^E\)</span>, <span class="math inline">\(G^W\)</span></td>
+<td>Government expenditure (East, West)</td>
 </tr>
 <tr class="odd">
-<td><span class="math inline">\(G^W\)</span></td>
-<td>Government expenditure</td>
-<td>West</td>
+<td><span class="math inline">\(r_d\)</span></td>
+<td>Interest rate on deposits</td>
 </tr>
 <tr class="even">
-<td><span class="math inline">\(R^E\)</span></td>
-<td>Rentier income</td>
-<td>East</td>
+<td><span class="math inline">\(r_b\)</span></td>
+<td>Interest rate on bonds</td>
 </tr>
 <tr class="odd">
-<td><span class="math inline">\(R^W\)</span></td>
-<td>Rentier income</td>
-<td>West</td>
+<td><span class="math inline">\(p_b\)</span></td>
+<td>Price of bonds</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\lambda_{12}^E\)</span>, <span class="math inline">\(\lambda_{12}^W\)</span></td>
+<td>Effect of deposit rate on cash demand (East, West)</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\lambda_{22}^E\)</span>, <span class="math inline">\(\lambda_{22}^W\)</span></td>
+<td>Effect of deposit rate on deposit demand (East, West)</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\lambda_{32}^E\)</span>, <span class="math inline">\(\lambda_{32}^W\)</span></td>
+<td>Effect of deposit rate on bond demand (East, West)</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\lambda_{13}^E\)</span>, <span class="math inline">\(\lambda_{13}^W\)</span></td>
+<td>Effect of bond rate on cash demand (East, West)</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\lambda_{23}^E\)</span>, <span class="math inline">\(\lambda_{23}^W\)</span></td>
+<td>Effect of bond rate on deposit demand (East, West)</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\lambda_{33}^E\)</span>, <span class="math inline">\(\lambda_{33}^W\)</span></td>
+<td>Effect of bond rate on bond demand (East, West)</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\lambda_{14}^E\)</span>, <span class="math inline">\(\lambda_{14}^W\)</span></td>
+<td>Effect of income-to-wealth ratio on cash demand (East, West)</td>
+</tr>
+<tr class="odd">
+<td><span class="math inline">\(\lambda_{24}^E\)</span>, <span class="math inline">\(\lambda_{24}^W\)</span></td>
+<td>Effect of income-to-wealth ratio on deposit demand (East, West)</td>
+</tr>
+<tr class="even">
+<td><span class="math inline">\(\lambda_{34}^E\)</span>, <span class="math inline">\(\lambda_{34}^W\)</span></td>
+<td>Effect of income-to-wealth ratio on bond demand (East, West)</td>
 </tr>
 </tbody>
 </table>
 </section>
 <section id="consumption" class="level3">
 <h3 class="anchored" data-anchor-id="consumption">Consumption</h3>
-<p><span class="math display">\[ C^E = \alpha_0 + (1-\theta)(\alpha_1^E \cdot WB^E + \alpha_3^E \cdot R^E) \tag{1}\]</span></p>
-<p><span class="math display">\[ C^W = \alpha_0 + (1-\theta)(\alpha_1^W \cdot WB^W + \alpha_2^W \cdot NT + \alpha_3^W \cdot R^W) \tag{2} \]</span></p>
+<p><span class="math display">\[ C^E = \alpha_0^E + (1-\theta)(\alpha_1^E \cdot WB^E + \alpha_3^E \cdot R^E) + \alpha_4^E \cdot V^E \tag{1}\]</span></p>
+<p><span class="math display">\[ C^W = \alpha_0^W + (1-\theta)[\alpha_1^W \cdot WB^W + \alpha_2^W \cdot NT + \alpha_3^W \cdot (+r_{-1}·ME_{-1} + r_{-1}·BE_{-1})] + \alpha_4^W \cdot V^W \tag{2} \]</span></p>
+<p><span class="math display">\[WB^E = Y^E - r_{l-1} \cdot L^E_{-1} - AF^E \tag{3}\]</span></p>
+<p><span class="math display">\[WB^W = Y^W - r_{l-1} \cdot L^W_{-1} - AF^W \tag{4}\]</span></p>
 </section>
 <section id="capital-investment" class="level3">
 <h3 class="anchored" data-anchor-id="capital-investment">Capital Investment</h3>
-<p><span class="math display">\[AF^E = \delta \cdot K^E_{-1} \tag{3}\]</span></p>
-<p><span class="math display">\[AF^W = \delta \cdot K^W_{-1} \tag{4}\]</span></p>
-<p><span class="math display">\[K^T_E = k \cdot Y^E_{-1} \tag{5}\]</span></p>
-<p><span class="math display">\[K^T_W = k \cdot Y^W_{-1} \tag{6}\]</span></p>
-<p><span class="math display">\[I^E = \gamma \cdot (K^T_E - K^E_{-1}) + AF^E \tag{7}\]</span></p>
-<p><span class="math display">\[I^W = \gamma \cdot (K^T_W - K^W_{-1}) + AF^W \tag{8}\]</span></p>
-<p><span class="math display">\[K^E = K^E_{-1} + I^E - AF^E \tag{9}\]</span></p>
-<p><span class="math display">\[K^W = K^W_{-1} + I^W - AF^W \tag{10}\]</span></p>
+<p><span class="math display">\[AF^E = \delta \cdot K^E_{-1} \tag{5}\]</span></p>
+<p><span class="math display">\[AF^W = \delta \cdot K^W_{-1} \tag{6}\]</span></p>
+<p><span class="math display">\[K^T_E = k \cdot Y^E_{-1} \tag{7}\]</span></p>
+<p><span class="math display">\[K^T_W = k \cdot Y^W_{-1} \tag{8}\]</span></p>
+<p><span class="math display">\[I^E = \gamma \cdot (K^T_E - K^E_{-1}) + AF^E \tag{9}\]</span></p>
+<p><span class="math display">\[I^W = \gamma \cdot (K^T_W - K^W_{-1}) + AF^W \tag{10}\]</span></p>
+<p><span class="math display">\[K^E = K^E_{-1} + I^E - AF^E \tag{11}\]</span></p>
+<p><span class="math display">\[K^W = K^W_{-1} + I^W - AF^W \tag{12}\]</span></p>
+<p><span class="math display">\[\Delta L^E = I^E - AF^E \tag{13}\]</span></p>
+<p><span class="math display">\[\Delta L^W = I^W - AF^W \tag{14}\]</span></p>
+<p><span class="math display">\[L^E = L^E_{-1} + \Delta L^E \tag{15}\]</span></p>
+<p><span class="math display">\[L^W = L^W_{-1} + \Delta L^W \tag{16}\]</span></p>
+<p><span class="math display">\[L = L^E + L^W \tag{17}\]</span></p>
 </section>
 <section id="trade-and-transfers" class="level3">
 <h3 class="anchored" data-anchor-id="trade-and-transfers">Trade and transfers</h3>
-<p><span class="math display">\[IM^E = \mu^E \cdot Y^E \cdot (1-\theta) \tag{11}\]</span></p>
-<p><span class="math display">\[IM^W = \mu^W \cdot Y^W \cdot (1-\theta) \tag{12}\]</span></p>
-<p><span class="math display">\[X^E = IM^W \tag{13}\]</span></p>
-<p><span class="math display">\[X^W = IM^E \tag{14}\]</span></p>
-<p><span class="math display">\[NT = WB^E \cdot \beta\]</span></p>
+<p><span class="math display">\[IM^E = \mu^E \cdot Y^E \cdot (1-\theta) \tag{18}\]</span></p>
+<p><span class="math display">\[IM^W = \mu^W \cdot Y^W \cdot (1-\theta) \tag{19}\]</span></p>
+<p><span class="math display">\[X^E = IM^W \tag{20}\]</span></p>
+<p><span class="math display">\[X^W = IM^E \tag{21}\]</span></p>
+<p><span class="math display">\[NT = WB^E \cdot \beta \tag{22}\]</span></p>
 </section>
 <section id="interest-payments" class="level3">
 <h3 class="anchored" data-anchor-id="interest-payments">Interest payments</h3>
+<p><span class="math display">\[r_{l-1} \cdot L_{-1} = r_{l-1} \cdot L^W_{-1} + r_{l-1} \cdot L^E_{-1} \tag{23}\]</span></p>
+<p><span class="math display">\[r_{d-1} \cdot M_{-1} = r_{d-1} \cdot M^W_{-1} + r_{d-1} \cdot M^E_{-1} \tag{24}\]</span></p>
 </section>
 <section id="government" class="level3">
 <h3 class="anchored" data-anchor-id="government">Government</h3>
-<p><span class="math display">\[Y^E = C^E + I^E + G^E + X^E - IM^E \tag{16}\]</span></p>
-<p><span class="math display">\[Y^W = C^W + I^W + G^W + X^W - IM^W \tag{17}\]</span></p>
-<p><span class="math display">\[T^E = Y^E \cdot \theta \tag{18}\]</span></p>
-<p><span class="math display">\[T^W = Y^W \cdot \theta \tag{19}\]</span></p>
+<p><span class="math display">\[Y^E = C^E + I^E + G^E + X^E - IM^E \tag{25}\]</span></p>
+<p><span class="math display">\[Y^W = C^W + I^W + G^W + X^W - IM^W \tag{26}\]</span></p>
+<p><span class="math display">\[T^E = Y^E \cdot \theta \tag{27}\]</span></p>
+<p><span class="math display">\[T^W = Y^W \cdot \theta \tag{28}\]</span></p>
+<p><span class="math display">\[G = G^E + G^W \tag{29}\]</span></p>
+<p><span class="math display">\[T = T^E + T^W \tag{30}\]</span></p>
+<p><span class="math display">\[\Delta B = G + r_{b-1} \cdot B_{-1} - r_{b-1} \cdot B^{CB}_{-1} - r_{d-1} \cdot M^{CB}_{-1} - T \tag{31}\]</span></p>
+<p><span class="math display">\[B = B_{-1} + \Delta B \tag{32}\]</span></p>
+</section>
+<section id="portfolio-decisions" class="level3">
+<h3 class="anchored" data-anchor-id="portfolio-decisions">Portfolio decisions</h3>
+<p><span class="math display">\[r_b = \frac{1}{p_b} \tag{33}\]</span></p>
+<p><span class="math display">\[CG^E = \Delta p_b \cdot B^E_{-1} \tag{34}\]</span></p>
+<p><span class="math display">\[CG^W = \Delta p_b \cdot B^W_{-1} \tag{35}\]</span></p>
+<p><span class="math display">\[DI^E = Y^E - T^E - NT + r_{d-1} \cdot M^E_{-1} + r_{b-1} \cdot B^E_{-1} \tag{36}\]</span></p>
+<p><span class="math display">\[DI^W = Y^W - T^W + NT + r_{d-1} \cdot M^W_{-1} + r_{b-1} \cdot B^W_{-1} \tag{37}\]</span></p>
+<p><span class="math display">\[V^E = V^E_{-1} + Y^E - C^E - T^E - NT + r_{d-1} \cdot M^E_{-1} + r_{b-1} \cdot B^E_{-1} + CG^E \tag{38}\]</span></p>
+<p><span class="math display">\[V^W = V^W_{-1} + Y^W - C^W - T^W + NT + r_{d-1} \cdot M^W_{-1} + r_{b-1} \cdot B^W_{-1} + CG^W \tag{39}\]</span></p>
+<p><span class="math display">\[\frac{M^E}{V^E} = \lambda_{20}^E + \lambda_{22}^E \cdot r_d + \lambda_{23}^E \cdot r_b + \lambda_{24}^E \cdot \left(\frac{DI^E}{V^E}\right) \tag{40}\]</span></p>
+<p><span class="math display">\[\frac{M^W}{V^W} = \lambda_{20}^W + \lambda_{22}^W \cdot r_d + \lambda_{23}^W \cdot r_b + \lambda_{24}^W \cdot \left(\frac{DI^W}{V^W}\right) \tag{41}\]</span></p>
+<p><span class="math display">\[\frac{p_b \cdot B^E}{V^E} = \lambda_{30}^E + \lambda_{32}^E \cdot r_d + \lambda_{33}^E \cdot r_b + \lambda_{34}^E \cdot \left(\frac{DI^E}{V^E}\right) \tag{42}\]</span></p>
+<p><span class="math display">\[\frac{p_b \cdot B^W}{V^W} = \lambda_{30}^W + \lambda_{32}^W \cdot r_d + \lambda_{33}^W \cdot r_b + \lambda_{34}^W \cdot \left(\frac{DI^W}{V^W}\right) \tag{43}\]</span></p>
+<p><span class="math display">\[H^E = V^E - M^E - B^E \tag{44}\]</span></p>
+<p><span class="math display">\[H^W = V^W - M^W - B^W \tag{45}\]</span></p>
+<p><span class="math display">\[M = M^E + M^W \tag{46}\]</span></p>
+<p><span class="math display">\[B^{CB} = B - B^W - B^E \tag{47}\]</span></p>
+<p><span class="math display">\[M^{CB} = M - M^W - M^E \tag{48}\]</span></p>
+<p><span class="math display">\[H = B^{CB} + M^{CB} \tag{49}\]</span></p>
+<p>Redundant equations:</p>
+<p><span class="math display">\[H = H^E + H^W \tag{50}\]</span></p>
+</section>
+<section id="challenges" class="level3">
+<h3 class="anchored" data-anchor-id="challenges">Challenges</h3>
+<p>The central bank is too accomodative. It not only absorbs all the excess bond but also the excess deposit.</p>
+<p>Also the central bank balances of both bond and depsoit could go negative, which means that the cash balance of the houshold might also go negative, if the household have full autonomy in portfolio decisions.</p>
 </section>
 </section>
 

@@ -38,6 +38,7 @@ format:
   /* Header styling - Line below the entire header section */
   .matrix-table thead {
     border-bottom: 1px solid black !important;
+    border-top: 1px solid black !important;
     margin-bottom: 10px; /* Add space between header line and body */
   }
   .matrix-table thead th {
@@ -48,6 +49,11 @@ format:
   /* Last row styling - Line above sum row */
   .matrix-table tbody tr:last-child {
     border-top: 1px solid black !important;
+  }
+  
+  /* Sum row styling - Line below sum row */
+  .matrix-table tbody tr:last-child {
+    border-bottom: 1px solid black !important;
   }
   
   /* Specific for transaction matrix complex header */
@@ -119,7 +125,15 @@ format:
     body { width: 100%; }
     .matrix-table { width: 100%; font-size: 10pt; }
   }
+  
+  /* Capital gain row styling */
+  .capital-gain-row {
+    border-bottom: 1px solid black !important;
+  }
 </style>
+
+## Introduction
+This models builds upon models LP, REG and BMW. The two regions have uneuqal development pace, and the east is developing faster, as in the case of the reforming China. The migrant workers remit money to from the east to the west, while we assume there is no migration in the other direction. 
 
 ## Balance sheet matrix
 
@@ -146,7 +160,7 @@ format:
       <td></td>
       <td></td>
       <td><span class="formula">-M</span></td>
-      <td></td>
+      <td>+M<sup>CB</sup></td>
       <td></td>
       <td>0</td>
     </tr>
@@ -180,7 +194,7 @@ format:
       <td></td>
       <td></td>
       <td>+B</td>
-      <td>-B</td>
+      <td>-B<sup>CB</sup></td>
       <td>0</td>
     </tr>
     <tr>
@@ -202,7 +216,7 @@ format:
       <td>0</td>
       <td>0</td>
       <td>0</td>
-      <td>-V</td>
+      <td>-V<sup>gov</sup></td>
       <td>-K</td>
     </tr>
     <tr>
@@ -390,43 +404,43 @@ format:
     <tr>
       <td>Loan</td>
       <td class="text-center"></td>
-      <td class="text-center"><span class="formula">-r<sub>-1</sub>·L<sup>E</sup><sub>-1</sub></span></td>
+      <td class="text-center"><span class="formula">-r<sub>l-1</sub>·L<sup>E</sup><sub>-1</sub></span></td>
       <td class="text-center"></td>
       <td class="text-center"></td>
-      <td class="text-center"><span class="formula">-r<sub>-1</sub>·L<sup>W</sup><sub>-1</sub></span></td>
+      <td class="text-center"><span class="formula">-r<sub>l-1</sub>·L<sup>W</sup><sub>-1</sub></span></td>
       <td class="text-center"></td>
       <td class="text-center"></td>
-      <td class="text-center"><span class="formula">+r<sub>-1</sub>L<sub>-1</sub></span></td>
+      <td class="text-center"><span class="formula">+r<sub>l-1</sub>L<sub>-1</sub></span></td>
       <td class="text-center"></td>
       <td class="text-center"></td>
       <td class="text-center">0</td>
     </tr>
     <tr>
       <td>Deposit</td>
-      <td class="text-center"><span class="formula">+r<sub>-1</sub>·M<sup>E</sup><sub>-1</sub></span></td>
+      <td class="text-center"><span class="formula">+r<sub>d-1</sub>·M<sup>E</sup><sub>-1</sub></span></td>
       <td class="text-center"></td>
       <td class="text-center"></td>
-      <td class="text-center"><span class="formula">+r<sub>-1</sub>·M<sup>W</sup><sub>-1</sub></span></td>
+      <td class="text-center"><span class="formula">+r<sub>d-1</sub>·M<sup>W</sup><sub>-1</sub></span></td>
       <td class="text-center"></td>
       <td class="text-center"></td>
       <td class="text-center"></td>
-      <td class="text-center"><span class="formula">-r<sub>-1</sub>·M<sub>-1</sub></span></td>
+      <td class="text-center"><span class="formula">-r<sub>d-1</sub>·M<sub>-1</sub></span></td>
       <td class="text-center"></td>
-      <td class="text-center"></td>
+      <td class="text-center"><span class="formula">+r<sub>d-1</sub>·M<sup>CB</sup><sub>-1</sub></span></td>
       <td class="text-center">0</td>
     </tr>
     <tr>
       <td>Bond</td>
-      <td class="text-center"><span class="formula">+r<sub>-1</sub>·B<sup>E</sup><sub>-1</sub></span></td>
+      <td class="text-center"><span class="formula">+B<sup>E</sup><sub>-1</sub></span></td>
       <td class="text-center"></td>
       <td class="text-center"></td>
-      <td class="text-center"><span class="formula">+r<sub>-1</sub>·B<sup>W</sup><sub>-1</sub></span></td>
+      <td class="text-center"><span class="formula">+B<sup>W</sup><sub>-1</sub></span></td>
       <td class="text-center"></td>
       <td class="text-center"></td>
-      <td class="text-center"><span class="formula">-r<sub>-1</sub>B<sub>-1</sub></span></td>
+      <td class="text-center"><span class="formula">-B<sub>-1</sub></span></td>
       <td class="text-center"></td>
       <td class="text-center"></td>
-      <td class="text-center"><span class="formula">+r<sub>-1</sub>·B<sub>-1</sub></span></td>
+      <td class="text-center"><span class="formula">+B<sup>CB</sup><sub>-1</sub></span></td>
       <td class="text-center">0</td>
     </tr>
     <tr>
@@ -437,10 +451,10 @@ format:
       <td class="text-center"></td>
       <td class="text-center"></td>
       <td class="text-center"></td>
-      <td class="text-center"><span class="formula">+r<sub>-1</sub>·B<sub>-1</sub></span></td>
+      <td class="text-center"><span class="formula">+B<sup>CB</sup><sub>-1</sub></span></td>
       <td class="text-center"></td>
       <td class="text-center"></td>
-      <td class="text-center"><span class="formula">-r<sub>-1</sub>·B<sub>-1</sub></span></td>
+      <td class="text-center"><span class="formula">-B<sup>CB</sup><sub>-1</sub>-r<sub>d-1</sub>·M<sup>CB</sup><sub>-1</sub></span></td>
       <td class="text-center">0</td>
     </tr>
     <tr>
@@ -456,6 +470,20 @@ format:
       <td class="text-center"></td>
       <td class="text-center"></td>
       <td class="text-center">0</td>
+    </tr>
+    <tr>
+      <td>[Disposable income]</td>
+      <td class="text-center">[DI<sup>E</sup>]</td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center">[DI<sup>W</sup>]</td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center">[DI]</td>
     </tr>
     <tr class="delta-divider" style="border-top: 1px solid black !important;">
       <td>Δ Cash</td>
@@ -496,21 +524,21 @@ format:
       <td class="text-center"></td>
       <td class="text-center"></td>
       <td class="text-center"><span class="formula">+ΔM</span></td>
-      <td class="text-center"></td>
+      <td class="text-center"><span class="formula">+ΔM<sup>CB</sup></span></td>
       <td class="text-center">0</td>
     </tr>
     <tr>
       <td>Δ Bonds</td>
-      <td class="text-center"><span class="formula">-ΔB<sup>E</sup></span></td>
+      <td class="text-center"><span class="formula">-p_b·ΔB<sup>E</sup></span></td>
       <td class="text-center"></td>
       <td class="text-center"></td>
-      <td class="text-center"><span class="formula">-ΔB<sup>W</sup></span></td>
+      <td class="text-center"><span class="formula">-p_b·ΔB<sup>W</sup></span></td>
       <td class="text-center"></td>
       <td class="text-center"></td>
-      <td class="text-center"><span class="formula">+ΔB</span></td>
+      <td class="text-center"><span class="formula">+p_b·ΔB</span></td>
       <td class="text-center"></td>
       <td class="text-center"></td>
-      <td class="text-center"><span class="formula">-ΔB</span></td>
+      <td class="text-center"><span class="formula">-p_b·ΔB</span></td>
       <td class="text-center">0</td>
     </tr>
     <tr style="border-top: 1px solid black !important;">
@@ -527,6 +555,20 @@ format:
       <td class="text-center">0</td>
       <td class="text-center">0</td>
     </tr>
+    <tr class="capital-gain-row">
+      <td>Capital gain</td>
+      <td class="text-center"><span class="formula">+Δp_b·B<sup>E</sup><sub>-1</sub></span></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"><span class="formula">+Δp_b·B<sup>W</sup><sub>-1</sub></span></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"><span class="formula">-Δp_b·B<sub>-1</sub></span></td>
+      <td class="text-center"></td>
+      <td class="text-center"></td>
+      <td class="text-center"><span class="formula">+Δp_b·B<sup>CB</sup><sub>-1</sub></span></td>
+      <td class="text-center">0</td>
+    </tr>
   </tbody>
 </table>
 </div>
@@ -534,71 +576,149 @@ format:
 ## Behavioral and accounting equations
 ### Exogenous variables
 
-| Parameter | Description | Region |
-|-----------|-------------|--------|
-| $\theta$ | Tax rate | Global |
-| $\alpha_0$ | Autonomous consumption | Global |
-| $\alpha_1^E$ | Propensity to consume out of wages | East |
-| $\alpha_1^W$ | Propensity to consume out of wages | West |
-| $\alpha_2^E$ | Propensity to consume out of transfer payments | East |
-| $\alpha_3^E$ | Propensity to consume out of net worth | East |
-| $\alpha_3^W$ | Propensity to consume out of net worth | West |
-| $\delta$ | Depreciation rate | Global |
-| $k$ | Target capital-output ratio | Global |
-| $\gamma$ | Adjustment parameter towards target capital stock | Global |
-| $\mu^E$ | Import propensity | East |
-| $\mu^W$ | Import propensity | West |
-| $\beta$ | Transfer rate on wages | Global |
-| $G^E$ | Government expenditure | East |
-| $G^W$ | Government expenditure | West |
-| $r_d$ | Interest rate on deposits | Global |
-| $r_b$ | Interest rate on bonds | Global |
+| Parameter | Description |
+|-----------|-------------|
+| $\theta$ | Tax rate |
+| $\alpha_0^E$, $\alpha_0^W$ | Autonomous consumption (East, West) |
+| $\alpha_1^E$, $\alpha_1^W$ | Propensity to consume out of wages (East, West) |
+| $\alpha_2^E$ | Propensity to consume out of transfer payments (East) |
+| $\alpha_3^E$, $\alpha_3^W$ | Propensity to consume out of net worth (East, West) |
+| $\alpha_4^E$, $\alpha_4^W$ | Propensity to consume out of past period's net worth (East, West) |
+| $\delta$ | Depreciation rate |
+| $k$ | Target capital-output ratio |
+| $\gamma$ | Adjustment parameter towards target capital stock |
+| $\mu^E$, $\mu^W$ | Import propensity (East, West) |
+| $\beta$ | Transfer rate on wages |
+| $G^E$, $G^W$ | Government expenditure (East, West) |
+| $r_d$ | Interest rate on deposits |
+| $r_b$ | Interest rate on bonds |
+| $p_b$ | Price of bonds |
+| $\lambda_{12}^E$, $\lambda_{12}^W$ | Effect of deposit rate on cash demand (East, West) |
+| $\lambda_{22}^E$, $\lambda_{22}^W$ | Effect of deposit rate on deposit demand (East, West) |
+| $\lambda_{32}^E$, $\lambda_{32}^W$ | Effect of deposit rate on bond demand (East, West) |
+| $\lambda_{13}^E$, $\lambda_{13}^W$ | Effect of bond rate on cash demand (East, West) |
+| $\lambda_{23}^E$, $\lambda_{23}^W$ | Effect of bond rate on deposit demand (East, West) |
+| $\lambda_{33}^E$, $\lambda_{33}^W$ | Effect of bond rate on bond demand (East, West) |
+| $\lambda_{14}^E$, $\lambda_{14}^W$ | Effect of income-to-wealth ratio on cash demand (East, West) |
+| $\lambda_{24}^E$, $\lambda_{24}^W$ | Effect of income-to-wealth ratio on deposit demand (East, West) |
+| $\lambda_{34}^E$, $\lambda_{34}^W$ | Effect of income-to-wealth ratio on bond demand (East, West) |
 
 ### Consumption
-$$ C^E = \alpha_0 + (1-\theta)(\alpha_1^E \cdot WB^E + \alpha_3^E \cdot R^E) \tag{1}$$
 
-$$ C^W = \alpha_0 + (1-\theta)[\alpha_1^W \cdot WB^W + \alpha_2^W \cdot NT + \alpha_3^W \cdot (+r_{-1}·ME_{-1} + r_{-1}·BE_{-1})] \tag{2} $$
+$$ C^E = \alpha_0^E + (1-\theta)(\alpha_1^E \cdot WB^E + \alpha_3^E \cdot R^E) + \alpha_4^E \cdot V^E \tag{1}$$
+
+$$ C^W = \alpha_0^W + (1-\theta)[\alpha_1^W \cdot WB^W + \alpha_2^W \cdot NT + \alpha_3^W \cdot (+r_{-1}·ME_{-1} + r_{-1}·BE_{-1})] + \alpha_4^W \cdot V^W \tag{2} $$
+
+$$WB^E = Y^E - r_{l-1} \cdot L^E_{-1} - AF^E \tag{3}$$
+
+$$WB^W = Y^W - r_{l-1} \cdot L^W_{-1} - AF^W \tag{4}$$
 
 ### Capital Investment
 
-$$AF^E = \delta \cdot K^E_{-1} \tag{3}$$
+$$AF^E = \delta \cdot K^E_{-1} \tag{5}$$
 
-$$AF^W = \delta \cdot K^W_{-1} \tag{4}$$
+$$AF^W = \delta \cdot K^W_{-1} \tag{6}$$
 
-$$K^T_E = k \cdot Y^E_{-1} \tag{5}$$
+$$K^T_E = k \cdot Y^E_{-1} \tag{7}$$
 
-$$K^T_W = k \cdot Y^W_{-1} \tag{6}$$
+$$K^T_W = k \cdot Y^W_{-1} \tag{8}$$
 
-$$I^E = \gamma \cdot (K^T_E - K^E_{-1}) + AF^E \tag{7}$$
+$$I^E = \gamma \cdot (K^T_E - K^E_{-1}) + AF^E \tag{9}$$
 
-$$I^W = \gamma \cdot (K^T_W - K^W_{-1}) + AF^W \tag{8}$$
+$$I^W = \gamma \cdot (K^T_W - K^W_{-1}) + AF^W \tag{10}$$
 
-$$K^E = K^E_{-1} + I^E - AF^E \tag{9}$$
+$$K^E = K^E_{-1} + I^E - AF^E \tag{11}$$
 
-$$K^W = K^W_{-1} + I^W - AF^W \tag{10}$$
+$$K^W = K^W_{-1} + I^W - AF^W \tag{12}$$
 
+$$\Delta L^E = I^E - AF^E \tag{13}$$
+
+$$\Delta L^W = I^W - AF^W \tag{14}$$
+
+$$L^E = L^E_{-1} + \Delta L^E \tag{15}$$
+
+$$L^W = L^W_{-1} + \Delta L^W \tag{16}$$
+
+$$L = L^E + L^W \tag{17}$$
 
 ### Trade and transfers
 
-$$IM^E = \mu^E \cdot Y^E \cdot (1-\theta) \tag{11}$$
+$$IM^E = \mu^E \cdot DI^E \cdot (1-\theta) \tag{18}$$
 
-$$IM^W = \mu^W \cdot Y^W \cdot (1-\theta) \tag{12}$$
+$$IM^W = \mu^W \cdot DI^W \cdot (1-\theta) \tag{19}$$
 
-$$X^E = IM^W \tag{13}$$
+$$X^E = IM^W \tag{20}$$
 
-$$X^W = IM^E \tag{14}$$
+$$X^W = IM^E \tag{21}$$
 
-$$NT = WB^E \cdot \beta \tag{15}$$
+$$NT = WB^E \cdot \beta \tag{22}$$
 
 ### Interest payments
 
+$$r_{l-1} \cdot L_{-1} = r_{l-1} \cdot L^W_{-1} + r_{l-1} \cdot L^E_{-1} \tag{23}$$
+
+$$r_{d-1} \cdot M_{-1} = r_{d-1} \cdot M^W_{-1} + r_{d-1} \cdot M^E_{-1} \tag{24}$$
+
 
 ### Government
-$$Y^E = C^E + I^E + G^E + X^E - IM^E \tag{16}$$
+$$Y^E = C^E + I^E + G^E + X^E - IM^E \tag{25}$$
 
-$$Y^W = C^W + I^W + G^W + X^W - IM^W \tag{17}$$
+$$Y^W = C^W + I^W + G^W + X^W - IM^W \tag{26}$$
 
-$$T^E = Y^E \cdot \theta \tag{18}$$
+$$T^E = Y^E \cdot \theta \tag{27}$$
 
-$$T^W = Y^W \cdot \theta \tag{19}$$
+$$T^W = Y^W \cdot \theta \tag{28}$$
 
+$$G = G^E + G^W \tag{29}$$
+
+$$T = T^E + T^W \tag{30}$$
+
+$$\Delta B = G + B_{-1} - B^{CB}_{-1} - r_{d-1} \cdot M^{CB}_{-1} - T \tag{31}$$
+
+$$B = B_{-1} + \Delta B \tag{32}$$
+
+### Portfolio decisions
+
+$$r_b = \frac{1}{p_b} \tag{33}$$
+
+$$CG^E = \Delta p_b \cdot B^E_{-1} \tag{34}$$
+
+$$CG^W = \Delta p_b \cdot B^W_{-1} \tag{35}$$
+
+$$DI^E = Y^E - T^E - NT + r_{d-1} \cdot M^E_{-1} + B^E_{-1} \tag{36}$$
+
+$$DI^W = Y^W - T^W + NT + r_{d-1} \cdot M^W_{-1} + B^W_{-1} \tag{37}$$
+
+$$V^E = V^E_{-1} + Y^E - C^E - T^E - NT + r_{d-1} \cdot M^E_{-1} + B^E_{-1} + CG^E \tag{38}$$
+
+$$V^W = V^W_{-1} + Y^W - C^W - T^W + NT + r_{d-1} \cdot M^W_{-1} + B^W_{-1} + CG^W \tag{39}$$
+
+$$\frac{M^E}{V^E} = \lambda_{20}^E + \lambda_{22}^E \cdot r_d + \lambda_{23}^E \cdot r_b + \lambda_{24}^E \cdot \left(\frac{DI^E}{V^E}\right) \tag{40}$$
+
+$$\frac{M^W}{V^W} = \lambda_{20}^W + \lambda_{22}^W \cdot r_d + \lambda_{23}^W \cdot r_b + \lambda_{24}^W \cdot \left(\frac{DI^W}{V^W}\right) \tag{41}$$
+
+$$\frac{p_b \cdot B^E}{V^E} = \lambda_{30}^E + \lambda_{32}^E \cdot r_d + \lambda_{33}^E \cdot r_b + \lambda_{34}^E \cdot \left(\frac{DI^E}{V^E}\right) \tag{42}$$
+
+$$\frac{p_b \cdot B^W}{V^W} = \lambda_{30}^W + \lambda_{32}^W \cdot r_d + \lambda_{33}^W \cdot r_b + \lambda_{34}^W \cdot \left(\frac{DI^W}{V^W}\right) \tag{43}$$
+
+$$H^E = V^E - M^E - B^E \tag{44}$$
+
+$$H^W = V^W - M^W - B^W \tag{45}$$
+
+$$M = M^E + M^W \tag{46}$$
+
+$$B^{CB} = B - B^W - B^E \tag{47}$$
+
+$$M^{CB} = M - M^W - M^E \tag{48}$$
+
+$$H = B^{CB} + M^{CB} \tag{49}$$
+
+Redundant equations:
+
+$$H = H^E + H^W \tag{50}$$
+
+### Challenges
+
+The central bank is too accomodative. It not only absorbs all the excess bond but also the excess deposit. 
+
+Also the central bank balances of both bond and depsoit could go negative, which means that the cash balance of the houshold might also go negative, if the household have full autonomy in portfolio decisions.
