@@ -40,8 +40,8 @@ series r_d
 r_d.displayname Interest rate on deposits
 series r_l
 r_l.displayname Interest rate on loans
-series p_b
-p_b.displayname Price of bonds
+series r_b
+r_b.displayname Interest rate on bills
 series lambda_20_e
 lambda_20_e.displayname Autonomous deposit demand (East)
 series lambda_20_w
@@ -51,29 +51,29 @@ lambda_22_e.displayname Effect of deposit rate on deposit demand (East)
 series lambda_22_w
 lambda_22_w.displayname Effect of deposit rate on deposit demand (West)
 series lambda_23_e
-lambda_23_e.displayname Effect of bond rate on deposit demand (East)
+lambda_23_e.displayname Effect of bill rate on deposit demand (East)
 series lambda_23_w
-lambda_23_w.displayname Effect of bond rate on deposit demand (West)
+lambda_23_w.displayname Effect of bill rate on deposit demand (West)
 series lambda_24_e
 lambda_24_e.displayname Effect of income-to-wealth ratio on deposit demand (East)
 series lambda_24_w
 lambda_24_w.displayname Effect of income-to-wealth ratio on deposit demand (West)
 series lambda_30_e
-lambda_30_e.displayname Autonomous bond demand (East)
+lambda_30_e.displayname Autonomous bill demand (East)
 series lambda_30_w
-lambda_30_w.displayname Autonomous bond demand (West)
+lambda_30_w.displayname Autonomous bill demand (West)
 series lambda_32_e
-lambda_32_e.displayname Effect of deposit rate on bond demand (East)
+lambda_32_e.displayname Effect of deposit rate on bill demand (East)
 series lambda_32_w
-lambda_32_w.displayname Effect of deposit rate on bond demand (West)
+lambda_32_w.displayname Effect of deposit rate on bill demand (West)
 series lambda_33_e
-lambda_33_e.displayname Effect of bond rate on bond demand (East)
+lambda_33_e.displayname Effect of bill rate on bill demand (East)
 series lambda_33_w
-lambda_33_w.displayname Effect of bond rate on bond demand (West)
+lambda_33_w.displayname Effect of bill rate on bill demand (West)
 series lambda_34_e
-lambda_34_e.displayname Effect of income-to-wealth ratio on bond demand (East)
+lambda_34_e.displayname Effect of income-to-wealth ratio on bill demand (East)
 series lambda_34_w
-lambda_34_w.displayname Effect of income-to-wealth ratio on bond demand (West)
+lambda_34_w.displayname Effect of income-to-wealth ratio on bill demand (West)
 
 ' stock variables
 series m_e
@@ -97,13 +97,13 @@ h_w.displayname Cash held by west households
 series h
 h.displayname Total cash
 series b_e
-b_e.displayname Bonds held by east households
+b_e.displayname Bills held by east households
 series b_w
-b_w.displayname Bonds held by west households
+b_w.displayname Bills held by west households
 series b_cb
-b_cb.displayname Bonds held by central bank
+b_cb.displayname Bills held by central bank
 series b
-b.displayname Total bonds
+b.displayname Total bills
 series k_e
 k_e.displayname Capital stock of east firms
 series k_w
@@ -148,8 +148,6 @@ series af_w
 af_w.displayname Depreciation of west capital
 series nt
 nt.displayname Net transfer from east to west
-series r_b
-r_b.displayname Interest rate on bonds
 series t_e
 t_e.displayname Taxes from east
 series t_w
@@ -160,22 +158,16 @@ series di_e
 di_e.displayname Disposable income of east households
 series di_w
 di_w.displayname Disposable income of west households
-series cg_e
-cg_e.displayname Capital gains for east households
-series cg_w
-cg_w.displayname Capital gains for west households
 series k_t_e
 k_t_e.displayname Target capital stock for east
 series k_t_w
 k_t_w.displayname Target capital stock for west
-series d_p_b
-d_p_b.displayname Change in bond price
 series d_l_e
 d_l_e.displayname Change in loans to east firms
 series d_l_w
 d_l_w.displayname Change in loans to west firms
 series d_b
-d_b.displayname Change in total bonds
+d_b.displayname Change in total bills
 series int_l
 int_l.displayname Interest paid on loans
 series int_d
@@ -204,11 +196,8 @@ t_w = 0
 t = 0
 di_e = 0
 di_w = 0
-cg_e = 0
-cg_w = 0
 k_t_e = 0
 k_t_w = 0
-d_p_b = 0
 d_l_e = 0
 d_l_w = 0
 d_b = 0
@@ -235,46 +224,41 @@ k_w = 0
 k_tot = 0
 v_e = 0
 v_w = 0
-r_b = 0
 
 ' Second, set values for exogenous parameters
 smpl @all
 ' exogenous variables
 theta = 0.2
-alpha_0_e = 20
-alpha_0_w = 10
 alpha_1_e = 0.6
 alpha_1_w = 0.6
 alpha_2_w = 0.7
 alpha_3_e = 0.5
 alpha_3_w = 0.5
-alpha_4_e = 0.2
-alpha_4_w = 0.2
+alpha_4_e = 0.1
+alpha_4_w = 0.1
 delta = 0.1
 k_ratio = 2
 gamma = 0.2
 mu_e = 0.1
 mu_w = 0.2
-beta = 0.2
+beta = 0.1
 g_e = 50
 g_w = 30
-p_b = 50
 r_d = 0.02
 r_l = 0.02
+r_b = 0.04
 lambda_20_e = 0.4
 lambda_20_w = 0.4
-lambda_22_e = 20
-lambda_22_w = 20
-lambda_23_e = -20
-lambda_23_w = -20
-lambda_24_e = 0
-lambda_24_w = 0
+lambda_22_e = 0.02
+lambda_22_w = 0.02
+lambda_23_e = -0.02
+lambda_23_w = -0.02
 lambda_30_e = 0.4
 lambda_30_w = 0.4
-lambda_32_e = -20
-lambda_32_w = -20
-lambda_33_e = 20
-lambda_33_w = 20
+lambda_32_e = -0.02
+lambda_32_w = -0.02
+lambda_33_e = 0.02
+lambda_33_w = 0.02
 
 
 ' Create model definition
@@ -282,8 +266,8 @@ model lrb
 
 'add equations
 'Consumption equations
-lrb.append c_e = alpha_0_e + (1-theta)*(alpha_1_e * wb_e*(1-beta) + alpha_3_e * (r_d(-1)*m_e(-1) + b_e(-1))) + alpha_4_e * v_e
-lrb.append c_w = alpha_0_w + (1-theta)*(alpha_1_w * wb_w + alpha_2_w * nt + alpha_3_w * (r_d(-1)*m_w(-1) + b_w(-1))) + alpha_4_w * v_w
+lrb.append c_e = (wb_e - nt)*(1-theta)*alpha_1_e + (r_d(-1)*m_e(-1) + r_b(-1)*b_e(-1))*(1-theta)*alpha_3_e + v_e*alpha_4_e
+lrb.append c_w = (1-theta)*(alpha_1_w * wb_w + alpha_2_w * nt + alpha_3_w * (r_d(-1)*m_w(-1) + r_b(-1)*b_w(-1))) + alpha_4_w * v_w
 lrb.append wb_e = y_e - r_l(-1) * l_e(-1) - af_e
 lrb.append wb_w = y_w - r_l(-1) * l_w(-1) - af_w
 
@@ -292,8 +276,8 @@ lrb.append af_e = delta * k_e(-1)
 lrb.append af_w = delta * k_w(-1)
 lrb.append k_t_e = k_ratio * y_e(-1)
 lrb.append k_t_w = k_ratio * y_w(-1)
-lrb.append i_e = gamma * (k_t_e - k_e(-1)) + af_e
-lrb.append i_w = gamma * (k_t_w - k_w(-1)) + af_w
+lrb.append i_e = (gamma * (k_t_e - k_e(-1)) + af_e) * ((gamma * (k_t_e - k_e(-1)) + af_e) > 0)
+lrb.append i_w = (gamma * (k_t_w - k_w(-1)) + af_w) * ((gamma * (k_t_w - k_w(-1)) + af_w) > 0)
 lrb.append k_e = k_e(-1) + i_e - af_e
 lrb.append k_w = k_w(-1) + i_w - af_w
 lrb.append d_l_e = i_e - af_e
@@ -308,7 +292,7 @@ lrb.append im_e = mu_e * y_e
 lrb.append im_w = mu_w * y_w
 lrb.append x_e = im_w
 lrb.append x_w = im_e
-lrb.append nt = wb_e * beta
+lrb.append nt = (wb_e * beta) * (wb_e > 0)
 
 'Interest payments
 lrb.append int_l = r_l(-1) * l_w(-1) + r_l(-1) * l_e(-1)
@@ -317,36 +301,31 @@ lrb.append int_d = r_d(-1) * m_w(-1) + r_d(-1) * m_e(-1)
 'Government
 lrb.append y_e = c_e + i_e + g_e + x_e - im_e
 lrb.append y_w = c_w + i_w + g_w + x_w - im_w
-lrb.append t_e = y_e * theta
-lrb.append t_w = y_w * theta
+lrb.append t_e = (wb_e + r_d(-1) * m_e(-1) + r_b(-1) * b_e(-1) - nt) * theta
+lrb.append t_w = (wb_w + r_d(-1) * m_w(-1) + r_b(-1) * b_w(-1) + nt) * theta
 lrb.append g = g_e + g_w
 lrb.append t = t_e + t_w
-lrb.append d_b = g + b(-1) - b_cb(-1) - r_d(-1) * m_cb(-1) - t
+lrb.append d_b = g + r_b(-1) * b(-1) - r_b(-1) * b_cb(-1) - r_d(-1) * m_cb(-1) - t
 lrb.append b = b(-1) + d_b
 
 'Portfolio decisions
-lrb.append p_b = @recode(b_cb(-1)<-0.1 * b(-1), p_b(-1)*1.1, @recode(b_cb(-1)>0.1*b(-1), p_b(-1)*0.9, p_b(-1)))
-lrb.append r_b = 1/p_b
-lrb.append d_p_b = p_b - p_b(-1)
-lrb.append cg_e = d_p_b * b_e(-1)
-lrb.append cg_w = d_p_b * b_w(-1)
-lrb.append di_e = y_e - t_e - nt + r_d(-1) * m_e(-1) + b_e(-1)
-lrb.append di_w = y_w - t_w + nt + r_d(-1) * m_w(-1) + b_w(-1)
-lrb.append v_e = v_e(-1) + y_e - c_e - t_e - nt + r_d(-1) * m_e(-1) + b_e(-1) + cg_e
-lrb.append v_w = v_w(-1) + y_w - c_w - t_w + nt + r_d(-1) * m_w(-1) + b_w(-1) + cg_w
+lrb.append di_e = wb_e + r_d(-1) * m_e(-1) + r_b(-1) * b_e(-1) - nt - t
+lrb.append di_w = wb_w + r_d(-1) * m_w(-1) + r_b(-1) * b_w(-1) + nt - t
+lrb.append v_e = v_e(-1) + di_e - c_e
+lrb.append v_w = v_w(-1) + di_w - c_w
 lrb.append m_e = v_e * (lambda_20_e + lambda_22_e * r_d + lambda_23_e * r_b)
 lrb.append m_w = v_w * (lambda_20_w + lambda_22_w * r_d + lambda_23_w * r_b)
-lrb.append b_e = v_e * (lambda_30_e + lambda_32_e * r_d + lambda_33_e * r_b) / p_b
-lrb.append b_w = v_w * (lambda_30_w + lambda_32_w * r_d + lambda_33_w * r_b) / p_b
+lrb.append b_e = v_e * (lambda_30_e + lambda_32_e * r_d + lambda_33_e * r_b)
+lrb.append b_w = v_w * (lambda_30_w + lambda_32_w * r_d + lambda_33_w * r_b)
 lrb.append h_e = v_e - m_e - b_e
 lrb.append h_w = v_w - m_w - b_w
-lrb.append m = m_e + m_w
+lrb.append m = l
 lrb.append b_cb = b - b_w - b_e
 lrb.append m_cb = m - m_w - m_e
-lrb.append h = b_cb + m_cb 
-
-
+lrb.append h = b_cb + m_cb
 
 ' solve the baseline model
+smpl 1800 @last
+g_e = 40
 smpl 1701 @last
 lrb.solve

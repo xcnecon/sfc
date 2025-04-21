@@ -187,7 +187,7 @@ This models builds upon models LP, REG and BMW. The two regions have uneuqal dev
       <td>0</td>
     </tr>
     <tr>
-      <td>Bonds</td>
+      <td>Bills</td>
       <td>+B<sup>E</sup></td>
       <td>+B<sup>W</sup></td>
       <td></td>
@@ -430,17 +430,17 @@ This models builds upon models LP, REG and BMW. The two regions have uneuqal dev
       <td class="text-center">0</td>
     </tr>
     <tr>
-      <td>Bond</td>
-      <td class="text-center"><span class="formula">+B<sup>E</sup><sub>-1</sub></span></td>
+      <td>Bill</td>
+      <td class="text-center"><span class="formula">+r<sub>b-1</sub> &middot; B<sup>E</sup><sub>-1</sub></span></td>
       <td class="text-center"></td>
       <td class="text-center"></td>
-      <td class="text-center"><span class="formula">+B<sup>W</sup><sub>-1</sub></span></td>
+      <td class="text-center"><span class="formula">+r<sub>b-1</sub> &middot; B<sup>W</sup><sub>-1</sub></span></td>
       <td class="text-center"></td>
       <td class="text-center"></td>
-      <td class="text-center"><span class="formula">-B<sub>-1</sub></span></td>
+      <td class="text-center"><span class="formula">-r<sub>b-1</sub> &middot; B<sub>-1</sub></span></td>
       <td class="text-center"></td>
       <td class="text-center"></td>
-      <td class="text-center"><span class="formula">+B<sup>CB</sup><sub>-1</sub></span></td>
+      <td class="text-center"><span class="formula">+r<sub>b-1</sub> &middot; B<sup>CB</sup><sub>-1</sub></span></td>
       <td class="text-center">0</td>
     </tr>
     <tr>
@@ -451,10 +451,10 @@ This models builds upon models LP, REG and BMW. The two regions have uneuqal dev
       <td class="text-center"></td>
       <td class="text-center"></td>
       <td class="text-center"></td>
-      <td class="text-center"><span class="formula">+B<sup>CB</sup><sub>-1</sub></span></td>
+      <td class="text-center"><span class="formula">+r<sub>b-1</sub> &middot; B<sup>CB</sup><sub>-1</sub> + r<sub>d-1</sub> &middot; M<sup>CB</sup><sub>-1</sub></span></td>
       <td class="text-center"></td>
       <td class="text-center"></td>
-      <td class="text-center"><span class="formula">-B<sup>CB</sup><sub>-1</sub>-r<sub>d-1</sub>·M<sup>CB</sup><sub>-1</sub></span></td>
+      <td class="text-center"><span class="formula">-(r<sub>b-1</sub> &middot; B<sup>CB</sup><sub>-1</sub> + r<sub>d-1</sub> &middot; M<sup>CB</sup><sub>-1</sub>)</span></td>
       <td class="text-center">0</td>
     </tr>
     <tr>
@@ -528,17 +528,17 @@ This models builds upon models LP, REG and BMW. The two regions have uneuqal dev
       <td class="text-center">0</td>
     </tr>
     <tr>
-      <td>Δ Bonds</td>
-      <td class="text-center"><span class="formula">-p_b·ΔB<sup>E</sup></span></td>
+      <td>Δ Bills</td>
+      <td class="text-center"><span class="formula">-ΔB<sup>E</sup></span></td>
       <td class="text-center"></td>
       <td class="text-center"></td>
-      <td class="text-center"><span class="formula">-p_b·ΔB<sup>W</sup></span></td>
+      <td class="text-center"><span class="formula">-ΔB<sup>W</sup></span></td>
       <td class="text-center"></td>
       <td class="text-center"></td>
-      <td class="text-center"><span class="formula">+p_b·ΔB</span></td>
+      <td class="text-center"><span class="formula">+ΔB</span></td>
       <td class="text-center"></td>
       <td class="text-center"></td>
-      <td class="text-center"><span class="formula">-p_b·ΔB</span></td>
+      <td class="text-center"><span class="formula">-ΔB</span></td>
       <td class="text-center">0</td>
     </tr>
     <tr style="border-top: 1px solid black !important;">
@@ -555,20 +555,6 @@ This models builds upon models LP, REG and BMW. The two regions have uneuqal dev
       <td class="text-center">0</td>
       <td class="text-center">0</td>
     </tr>
-    <tr class="capital-gain-row">
-      <td>Capital gain</td>
-      <td class="text-center"><span class="formula">+Δp_b·B<sup>E</sup><sub>-1</sub></span></td>
-      <td class="text-center"></td>
-      <td class="text-center"></td>
-      <td class="text-center"><span class="formula">+Δp_b·B<sup>W</sup><sub>-1</sub></span></td>
-      <td class="text-center"></td>
-      <td class="text-center"></td>
-      <td class="text-center"><span class="formula">-Δp_b·B<sub>-1</sub></span></td>
-      <td class="text-center"></td>
-      <td class="text-center"></td>
-      <td class="text-center"><span class="formula">+Δp_b·B<sup>CB</sup><sub>-1</sub></span></td>
-      <td class="text-center">0</td>
-    </tr>
   </tbody>
 </table>
 </div>
@@ -581,33 +567,30 @@ This models builds upon models LP, REG and BMW. The two regions have uneuqal dev
 | $\theta$ | Tax rate |
 | $\alpha_0^E$, $\alpha_0^W$ | Autonomous consumption (East, West) |
 | $\alpha_1^E$, $\alpha_1^W$ | Propensity to consume out of wages (East, West) |
-| $\alpha_2^E$ | Propensity to consume out of transfer payments (East) |
-| $\alpha_3^E$, $\alpha_3^W$ | Propensity to consume out of net worth (East, West) |
-| $\alpha_4^E$, $\alpha_4^W$ | Propensity to consume out of past period's net worth (East, West) |
+| $\alpha_2^W$ | Propensity to consume out of transfer payments (West) |
+| $\alpha_3^E$, $\alpha_3^W$ | Propensity to consume out of interest income (East, West) |
+| $\alpha_4^E$, $\alpha_4^W$ | Propensity to consume out of past net worth (East, West) |
 | $\delta$ | Depreciation rate |
-| $k$ | Target capital-output ratio |
+| $k_{ratio}$ | Target capital-output ratio |
 | $\gamma$ | Adjustment parameter towards target capital stock |
 | $\mu^E$, $\mu^W$ | Import propensity (East, West) |
 | $\beta$ | Transfer rate on wages |
 | $G^E$, $G^W$ | Government expenditure (East, West) |
 | $r_d$ | Interest rate on deposits |
-| $r_b$ | Interest rate on bonds |
-| $p_b$ | Price of bonds |
-| $\lambda_{12}^E$, $\lambda_{12}^W$ | Effect of deposit rate on cash demand (East, West) |
+| $r_l$ | Interest rate on loans |
+| $r_b$ | Interest rate on bills |
+| $\lambda_{20}^E$, $\lambda_{20}^W$ | Autonomous deposit demand (East, West) |
 | $\lambda_{22}^E$, $\lambda_{22}^W$ | Effect of deposit rate on deposit demand (East, West) |
-| $\lambda_{32}^E$, $\lambda_{32}^W$ | Effect of deposit rate on bond demand (East, West) |
-| $\lambda_{13}^E$, $\lambda_{13}^W$ | Effect of bond rate on cash demand (East, West) |
-| $\lambda_{23}^E$, $\lambda_{23}^W$ | Effect of bond rate on deposit demand (East, West) |
-| $\lambda_{33}^E$, $\lambda_{33}^W$ | Effect of bond rate on bond demand (East, West) |
-| $\lambda_{14}^E$, $\lambda_{14}^W$ | Effect of income-to-wealth ratio on cash demand (East, West) |
-| $\lambda_{24}^E$, $\lambda_{24}^W$ | Effect of income-to-wealth ratio on deposit demand (East, West) |
-| $\lambda_{34}^E$, $\lambda_{34}^W$ | Effect of income-to-wealth ratio on bond demand (East, West) |
+| $\lambda_{23}^E$, $\lambda_{23}^W$ | Effect of bill rate on deposit demand (East, West) |
+| $\lambda_{30}^E$, $\lambda_{30}^W$ | Autonomous bill demand (East, West) |
+| $\lambda_{32}^E$, $\lambda_{32}^W$ | Effect of deposit rate on bill demand (East, West) |
+| $\lambda_{33}^E$, $\lambda_{33}^W$ | Effect of bill rate on bill demand (East, West) |
 
 ### Consumption
 
-$$ C^E = \alpha_0^E + (1-\theta)(\alpha_1^E \cdot WB^E + \alpha_3^E \cdot R^E) + \alpha_4^E \cdot V^E \tag{1}$$
+$$ C^E = (WB^E - NT)(1-\theta)\alpha_1^E + (r_{d-1}M^E_{-1} + r_{b-1}B^E_{-1})(1-\theta)\alpha_3^E + \alpha_4^E V^E_{-1} \tag{1}$$
 
-$$ C^W = \alpha_0^W + (1-\theta)[\alpha_1^W \cdot WB^W + \alpha_2^W \cdot NT + \alpha_3^W \cdot (+r_{-1}·ME_{-1} + r_{-1}·BE_{-1})] + \alpha_4^W \cdot V^W \tag{2} $$
+$$ C^W = (1-\theta)[\alpha_1^W WB^W + \alpha_2^W NT + \alpha_3^W (r_{d-1}M^W_{-1} + r_{b-1}B^W_{-1})] + \alpha_4^W V^W_{-1} \tag{2} $$
 
 $$WB^E = Y^E - r_{l-1} \cdot L^E_{-1} - AF^E \tag{3}$$
 
@@ -619,13 +602,13 @@ $$AF^E = \delta \cdot K^E_{-1} \tag{5}$$
 
 $$AF^W = \delta \cdot K^W_{-1} \tag{6}$$
 
-$$K^T_E = k \cdot Y^E_{-1} \tag{7}$$
+$$K^T_E = k_{ratio} \cdot Y^E_{-1} \tag{7}$$
 
-$$K^T_W = k \cdot Y^W_{-1} \tag{8}$$
+$$K^T_W = k_{ratio} \cdot Y^W_{-1} \tag{8}$$
 
-$$I^E = \gamma \cdot (K^T_E - K^E_{-1}) + AF^E \tag{9}$$
+$$I^E = \max(0, \gamma \cdot (K^T_E - K^E_{-1}) + AF^E) \tag{9}$$
 
-$$I^W = \gamma \cdot (K^T_W - K^W_{-1}) + AF^W \tag{10}$$
+$$I^W = \max(0, \gamma \cdot (K^T_W - K^W_{-1}) + AF^W) \tag{10}$$
 
 $$K^E = K^E_{-1} + I^E - AF^E \tag{11}$$
 
@@ -643,15 +626,15 @@ $$L = L^E + L^W \tag{17}$$
 
 ### Trade and transfers
 
-$$IM^E = \mu^E \cdot DI^E \cdot (1-\theta) \tag{18}$$
+$$IM^E = \mu^E \cdot Y^E \tag{18}$$
 
-$$IM^W = \mu^W \cdot DI^W \cdot (1-\theta) \tag{19}$$
+$$IM^W = \mu^W \cdot Y^W \tag{19}$$
 
 $$X^E = IM^W \tag{20}$$
 
 $$X^W = IM^E \tag{21}$$
 
-$$NT = WB^E \cdot \beta \tag{22}$$
+$$NT = \beta \cdot \max(0, WB^E) \tag{22}$$
 
 ### Interest payments
 
@@ -665,60 +648,54 @@ $$Y^E = C^E + I^E + G^E + X^E - IM^E \tag{25}$$
 
 $$Y^W = C^W + I^W + G^W + X^W - IM^W \tag{26}$$
 
-$$T^E = Y^E \cdot \theta \tag{27}$$
+$$T^E = \theta \cdot (WB^E + r_{d-1} M^E_{-1} + r_{b-1} B^E_{-1} - NT) \tag{27}$$
 
-$$T^W = Y^W \cdot \theta \tag{28}$$
+$$T^W = \theta \cdot (WB^W + r_{d-1} M^W_{-1} + r_{b-1} B^W_{-1} + NT) \tag{28}$$
 
 $$G = G^E + G^W \tag{29}$$
 
 $$T = T^E + T^W \tag{30}$$
 
-$$\Delta B = G + B_{-1} - B^{CB}_{-1} - r_{d-1} \cdot M^{CB}_{-1} - T \tag{31}$$
+$$\Delta B = G + r_{b-1} B_{-1} - T - (r_{b-1} B^{CB}_{-1} + r_{d-1} M^{CB}_{-1}) \tag{31}$$
 
 $$B = B_{-1} + \Delta B \tag{32}$$
 
 ### Portfolio decisions
 
-$$r_b = \frac{1}{p_b} \tag{33}$$
+$$DI^E = WB^E + r_{d-1} M^E_{-1} + r_{b-1} B^E_{-1} - NT - T^E \tag{33}$$
 
-$$CG^E = \Delta p_b \cdot B^E_{-1} \tag{34}$$
+$$DI^W = WB^W + r_{d-1} M^W_{-1} + r_{b-1} B^W_{-1} + NT - T^W \tag{34}$$
 
-$$CG^W = \Delta p_b \cdot B^W_{-1} \tag{35}$$
+$$V^E = V^E_{-1} + DI^E - C^E \tag{35}$$
 
-$$DI^E = Y^E - T^E - NT + r_{d-1} \cdot M^E_{-1} + B^E_{-1} \tag{36}$$
+$$V^W = V^W_{-1} + DI^W - C^W \tag{36}$$
 
-$$DI^W = Y^W - T^W + NT + r_{d-1} \cdot M^W_{-1} + B^W_{-1} \tag{37}$$
+$$\frac{M^E}{V^E} = \lambda_{20}^E + \lambda_{22}^E r_d + \lambda_{23}^E r_b \tag{37}$$
 
-$$V^E = V^E_{-1} + Y^E - C^E - T^E - NT + r_{d-1} \cdot M^E_{-1} + B^E_{-1} + CG^E \tag{38}$$
+$$\frac{M^W}{V^W} = \lambda_{20}^W + \lambda_{22}^W r_d + \lambda_{23}^W r_b \tag{38}$$
 
-$$V^W = V^W_{-1} + Y^W - C^W - T^W + NT + r_{d-1} \cdot M^W_{-1} + B^W_{-1} + CG^W \tag{39}$$
+$$\frac{B^E}{V^E} = \lambda_{30}^E + \lambda_{32}^E r_d + \lambda_{33}^E r_b \tag{39}$$
 
-$$\frac{M^E}{V^E} = \lambda_{20}^E + \lambda_{22}^E \cdot r_d + \lambda_{23}^E \cdot r_b + \lambda_{24}^E \cdot \left(\frac{DI^E}{V^E}\right) \tag{40}$$
+$$\frac{B^W}{V^W} = \lambda_{30}^W + \lambda_{32}^W r_d + \lambda_{33}^W r_b \tag{40}$$
 
-$$\frac{M^W}{V^W} = \lambda_{20}^W + \lambda_{22}^W \cdot r_d + \lambda_{23}^W \cdot r_b + \lambda_{24}^W \cdot \left(\frac{DI^W}{V^W}\right) \tag{41}$$
+$$H^E = V^E - M^E - B^E \tag{41}$$
 
-$$\frac{p_b \cdot B^E}{V^E} = \lambda_{30}^E + \lambda_{32}^E \cdot r_d + \lambda_{33}^E \cdot r_b + \lambda_{34}^E \cdot \left(\frac{DI^E}{V^E}\right) \tag{42}$$
+$$H^W = V^W - M^W - B^W \tag{42}$$
 
-$$\frac{p_b \cdot B^W}{V^W} = \lambda_{30}^W + \lambda_{32}^W \cdot r_d + \lambda_{33}^W \cdot r_b + \lambda_{34}^W \cdot \left(\frac{DI^W}{V^W}\right) \tag{43}$$
+$$M = L \tag{43}$$
 
-$$H^E = V^E - M^E - B^E \tag{44}$$
+$$B^{CB} = B - B^W - B^E \tag{44}$$
 
-$$H^W = V^W - M^W - B^W \tag{45}$$
+$$M^{CB} = M - M^W - M^E \tag{45}$$
 
-$$M = M^E + M^W \tag{46}$$
-
-$$B^{CB} = B - B^W - B^E \tag{47}$$
-
-$$M^{CB} = M - M^W - M^E \tag{48}$$
-
-$$H = B^{CB} + M^{CB} \tag{49}$$
+$$H = B^{CB} + M^{CB} \tag{46}$$
 
 Redundant equations:
 
-$$H = H^E + H^W \tag{50}$$
+$$H = H^E + H^W \tag{47}$$
 
 ### Challenges
 
-The central bank is too accomodative. It not only absorbs all the excess bond but also the excess deposit. 
+The central bank is too accomodative. It not only absorbs all the excess bills but also the excess deposit. 
 
-Also the central bank balances of both bond and depsoit could go negative, which means that the cash balance of the houshold might also go negative, if the household have full autonomy in portfolio decisions.
+Also the central bank balances of both bills and deposit could go negative, which means that the cash balance of the household might also go negative, if the household have full autonomy in portfolio decisions.
