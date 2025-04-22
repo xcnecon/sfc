@@ -272,6 +272,7 @@ lrb.append wb_e = y_e - r_l(-1) * l_e(-1) - af_e
 lrb.append wb_w = y_w - r_l(-1) * l_w(-1) - af_w
 
 'Capital Investment
+lrb.append r_b = r_l
 lrb.append af_e = delta * k_e(-1)
 lrb.append af_w = delta * k_w(-1)
 lrb.append k_t_e = k_ratio * y_e(-1)
@@ -309,8 +310,8 @@ lrb.append d_b = g + r_b(-1) * b(-1) - r_b(-1) * b_cb(-1) - r_d(-1) * m_cb(-1) -
 lrb.append b = b(-1) + d_b
 
 'Portfolio decisions
-lrb.append di_e = wb_e + r_d(-1) * m_e(-1) + r_b(-1) * b_e(-1) - nt - t
-lrb.append di_w = wb_w + r_d(-1) * m_w(-1) + r_b(-1) * b_w(-1) + nt - t
+lrb.append di_e = wb_e + r_d(-1) * m_e(-1) + r_b(-1) * b_e(-1) - nt - t_e
+lrb.append di_w = wb_w + r_d(-1) * m_w(-1) + r_b(-1) * b_w(-1) + nt - t_w
 lrb.append v_e = v_e(-1) + di_e - c_e
 lrb.append v_w = v_w(-1) + di_w - c_w
 lrb.append m_e = v_e * (lambda_20_e + lambda_22_e * r_d + lambda_23_e * r_b)
@@ -325,7 +326,7 @@ lrb.append m_cb = m - m_w - m_e
 lrb.append h = b_cb + m_cb
 
 ' solve the baseline model
-smpl 1800 @last
-g_e = 40
+smpl 1900 @last
+r_l = 0.04
 smpl 1701 @last
 lrb.solve
