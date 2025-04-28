@@ -588,9 +588,9 @@ This models builds upon models LP, REG and BMW. The two regions have uneuqal dev
 
 ### Consumption
 
-$$ C^E = (WB^E - NT)(1-\theta)\alpha_1^E + (r_{d-1}M^E_{-1} + r_{b-1}B^E_{-1})(1-\theta)\alpha_3^E + \alpha_4^E V^E_{-1} \tag{1}$$
+$$ C^E = alpha0^E + (WB^E - NT)(1-\theta)\alpha_1^E + (r_{d-1}M^E_{-1} + r_{b-1}B^E_{-1})(1-\theta)\alpha_3^E + \alpha_4^E V^E_{-1} \tag{1}$$
 
-$$ C^W = (1-\theta)[\alpha_1^W WB^W + \alpha_2^W NT + \alpha_3^W (r_{d-1}M^W_{-1} + r_{b-1}B^W_{-1})] + \alpha_4^W V^W_{-1} \tag{2} $$
+$$ C^W = alpha0^W + (1-\theta)[\alpha_1^W WB^W + \alpha_2^W NT + \alpha_3^W (r_{d-1}M^W_{-1} + r_{b-1}B^W_{-1})] + \alpha_4^W V^W_{-1} \tag{2} $$
 
 $$WB^E = Y^E - r_{l-1} \cdot L^E_{-1} - AF^E \tag{3}$$
 
@@ -634,7 +634,7 @@ $$X^E = IM^W \tag{20}$$
 
 $$X^W = IM^E \tag{21}$$
 
-$$NT = \beta \cdot \max(0, WB^E) \tag{22}$$
+$$NT = \beta \cdot (1-\theta) \cdot \max(0, WB^E) \tag{22}$$
 
 ### Interest payments
 

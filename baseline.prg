@@ -138,6 +138,8 @@ series y_e
 y_e.displayname GDP of east
 series y_w
 y_w.displayname GDP of west
+series y
+y.displayname Aggregate GDP
 series wb_e
 wb_e.displayname Wage bill of east
 series wb_w
@@ -203,6 +205,7 @@ d_l_w = 0
 d_b = 0
 int_l = 0
 int_d = 0
+y = 0
 
 ' Stock variables
 m_e = 0
@@ -229,6 +232,8 @@ v_w = 0
 smpl @all
 ' exogenous variables
 theta = 0.2
+alpha_0_e = 20
+alpha_0_w = 20
 alpha_1_e = 0.6
 alpha_1_w = 0.6
 alpha_2_w = 0.7
@@ -242,8 +247,8 @@ gamma = 0.2
 mu_e = 0.1
 mu_w = 0.2
 beta = 0.1
-g_e = 50
-g_w = 30
+g_e = 100
+g_w = 50
 r_d = 0.02
 r_l = 0.02
 r_b = 0.04
@@ -266,8 +271,8 @@ model lrb
 
 'add equations
 'Consumption equations
-lrb.append c_e = (wb_e - nt)*(1-theta)*alpha_1_e + (r_d(-1)*m_e(-1) + r_b(-1)*b_e(-1))*(1-theta)*alpha_3_e + v_e*alpha_4_e
-lrb.append c_w = (1-theta)*(alpha_1_w * wb_w + alpha_2_w * nt + alpha_3_w * (r_d(-1)*m_w(-1) + r_b(-1)*b_w(-1))) + alpha_4_w * v_w
+lrb.append c_e = alpha_0_e + (wb_e - nt)*(1-theta)*alpha_1_e + (r_d(-1)*m_e(-1) + r_b(-1)*b_e(-1))*(1-theta)*alpha_3_e + v_e*alpha_4_e
+lrb.append c_w = alpha_0_w + (1-theta)*(alpha_1_w * wb_w + alpha_2_w * nt + alpha_3_w * (r_d(-1)*m_w(-1) + r_b(-1)*b_w(-1))) + alpha_4_w * v_w
 lrb.append wb_e = y_e - r_l(-1) * l_e(-1) - af_e
 lrb.append wb_w = y_w - r_l(-1) * l_w(-1) - af_w
 
@@ -293,7 +298,7 @@ lrb.append im_e = mu_e * y_e
 lrb.append im_w = mu_w * y_w
 lrb.append x_e = im_w
 lrb.append x_w = im_e
-lrb.append nt = (wb_e * beta) * (wb_e > 0)
+lrb.append nt = (wb_e*(1-theta)* beta) * (wb_e > 0)
 
 'Interest payments
 lrb.append int_l = r_l(-1) * l_w(-1) + r_l(-1) * l_e(-1)
@@ -302,6 +307,7 @@ lrb.append int_d = r_d(-1) * m_w(-1) + r_d(-1) * m_e(-1)
 'Government
 lrb.append y_e = c_e + i_e + g_e + x_e - im_e
 lrb.append y_w = c_w + i_w + g_w + x_w - im_w
+lrb.append y = y_e + y_w
 lrb.append t_e = (wb_e + r_d(-1) * m_e(-1) + r_b(-1) * b_e(-1) - nt) * theta
 lrb.append t_w = (wb_w + r_d(-1) * m_w(-1) + r_b(-1) * b_w(-1) + nt) * theta
 lrb.append g = g_e + g_w
@@ -326,7 +332,120 @@ lrb.append m_cb = m - m_w - m_e
 lrb.append h = b_cb + m_cb
 
 ' solve the baseline model
-smpl 1900 @last
-r_l = 0.04
 smpl 1701 @last
 lrb.solve
+
+'increase transfer
+lrb.scenario(n, a="_1")  "Scenario a"
+smpl 1900 @last
+beta = 0.15
+smpl @all
+lrb.solve
+smpl 1850 @last
+graph gpd_1.line y_1
+graph region_gdp_1.line y_e_1 y_w_1
+graph wealth_1.line v_e_1 v_w_1
+graph consumption_1.line c_e_1 c_w_1
+graph ratio_1.line y_e_1/y_w_1
+graph di_1.line di_e_1 di_w_1
+smpl 1850 @last
+beta = 0.1
+
+'reduce Import
+lrb.scenario(n, a="_2")  "Scenario b"
+smpl 1900 @last
+mu_w = 0.15
+smpl @all
+lrb.solve
+smpl 1850 @last
+graph gpd_2.line y_2
+graph region_gdp_2.line y_e_2 y_w_2
+graph wealth_2.line v_e_2 v_w_2
+graph consumption_2.line c_e_2 c_w_2
+graph transfer_2.line nt_2
+graph ratio_2.line y_e_2/y_w_2
+graph di_2.line di_e_2 di_w_2
+smpl 1850 @last
+mu_w = 0.2
+
+'reduce transfer
+lrb.scenario(n, a="_3")  "Scenario c"
+smpl 1900 @last
+beta = 0.05
+smpl @all
+lrb.solve
+smpl 1850 @last
+graph gpd_3.line y_3
+graph region_gdp_3.line y_e_3 y_w_3
+graph wealth_3.line v_e_3 v_w_3
+graph consumption_3.line c_e_3 c_w_3
+graph ratio_3.line y_e_3/y_w_3
+graph di_3.line di_e_3 di_w_3
+smpl 1850 @last
+beta = 0.1
+
+'increase government expenditure in west
+lrb.scenario(n, a="_4")  "Scenario d"
+smpl 1900 @last
+g_w = 70
+smpl @all
+lrb.solve
+smpl 1850 @last
+graph gpd_4.line y_4
+graph region_gdp_4.line y_e_4 y_w_4
+graph wealth_4.line v_e_4 v_w_4
+graph consumption_4.line c_e_4 c_w_4
+graph ratio_4.line y_e_4/y_w_4
+graph di_4.line di_e_4 di_w_4
+smpl 1850 @last
+g_w = 50
+
+'increase government expenditure in east
+lrb.scenario(n, a="_5")  "Scenario e"
+smpl 1900 @last
+g_e = 120
+smpl @all
+lrb.solve
+smpl 1850 @last
+graph gpd_5.line y_5
+graph region_gdp_5.line y_e_5 y_w_5
+graph wealth_5.line v_e_5 v_w_5
+graph consumption_5.line c_e_5 c_w_5
+graph ratio_5.line y_e_5/y_w_5
+graph di_5.line di_e_5 di_w_5
+smpl 1850 @last
+g_e = 100
+
+' increase loan rate
+lrb.scenario(n, a="_6")  "Scenario f"
+smpl 1900 @last
+r_l = 0.04
+r_d = 0.04
+smpl @all
+lrb.solve
+smpl 1850 @last
+graph gpd_6.line y_6
+graph region_gdp_6.line y_e_6 y_w_6
+graph wealth_6.line v_e_6 v_w_6
+graph consumption_6.line c_e_6 c_w_6
+graph ratio_6.line y_e_6/y_w_6
+graph di_6.line di_e_6 di_w_6
+smpl 1850 @last
+r_l = 0.02
+r_d = 0.02
+
+' increase tax
+lrb.scenario(n, a="_7")  "Scenario g"
+smpl 1900 @last
+theta = 0.3
+smpl @all
+lrb.solve
+smpl 1850 @last
+graph gpd_7.line y_7
+graph region_gdp_7.line y_e_7 y_w_7
+graph wealth_7.line v_e_7 v_w_7
+graph consumption_7.line c_e_7 c_w_7
+graph ratio_7.line y_e_7/y_w_7
+graph di_7.line di_e_7 di_w_7
+smpl 1850 @last
+theta = 0.2
