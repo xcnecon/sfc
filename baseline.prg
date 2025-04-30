@@ -346,6 +346,7 @@ graph gpd_1.line y_1
 graph region_gdp_1.line y_e_1 y_w_1
 graph wealth_1.line v_e_1 v_w_1
 graph consumption_1.line c_e_1 c_w_1
+graph transfer_1.line nt_1
 graph ratio_1.line y_e_1/y_w_1
 graph di_1.line di_e_1 di_w_1
 smpl 1850 @last
@@ -379,6 +380,7 @@ graph gpd_3.line y_3
 graph region_gdp_3.line y_e_3 y_w_3
 graph wealth_3.line v_e_3 v_w_3
 graph consumption_3.line c_e_3 c_w_3
+graph transfer_3.line nt_3
 graph ratio_3.line y_e_3/y_w_3
 graph di_3.line di_e_3 di_w_3
 smpl 1850 @last
@@ -395,6 +397,7 @@ graph gpd_4.line y_4
 graph region_gdp_4.line y_e_4 y_w_4
 graph wealth_4.line v_e_4 v_w_4
 graph consumption_4.line c_e_4 c_w_4
+graph transfer_4.line nt_4
 graph ratio_4.line y_e_4/y_w_4
 graph di_4.line di_e_4 di_w_4
 smpl 1850 @last
@@ -411,6 +414,7 @@ graph gpd_5.line y_5
 graph region_gdp_5.line y_e_5 y_w_5
 graph wealth_5.line v_e_5 v_w_5
 graph consumption_5.line c_e_5 c_w_5
+graph transfer_5.line nt_5
 graph ratio_5.line y_e_5/y_w_5
 graph di_5.line di_e_5 di_w_5
 smpl 1850 @last
@@ -428,6 +432,7 @@ graph gpd_6.line y_6
 graph region_gdp_6.line y_e_6 y_w_6
 graph wealth_6.line v_e_6 v_w_6
 graph consumption_6.line c_e_6 c_w_6
+graph transfer_6.line nt_6
 graph ratio_6.line y_e_6/y_w_6
 graph di_6.line di_e_6 di_w_6
 smpl 1850 @last
@@ -445,6 +450,7 @@ graph gpd_7.line y_7
 graph region_gdp_7.line y_e_7 y_w_7
 graph wealth_7.line v_e_7 v_w_7
 graph consumption_7.line c_e_7 c_w_7
+graph transfer_7.line nt_7
 graph ratio_7.line y_e_7/y_w_7
 graph di_7.line di_e_7 di_w_7
 smpl 1850 @last
