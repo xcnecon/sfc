@@ -346,12 +346,19 @@ smpl @all
 lrb.solve
 smpl 1850 @last
 graph gdp_1.line y_1
+gdp_1.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\gdp_1"
 graph region_gdp_1.line y_e_1 y_w_1
+region_gdp_1.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\region_gdp_1"
 graph wealth_1.line v_e_1 v_w_1
+wealth_1.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\wealth_1"
 graph consumption_1.line c_e_1 c_w_1
+consumption_1.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\consumption_1"
 graph transfer_1.line nt_1
+transfer_1.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\transfer_1"
 graph ratio_1.line y_e_1/y_w_1
+ratio_1.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\ratio_1"
 graph di_1.line di_e_1 di_w_1
+di_1.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\di_1"
 smpl 1850 @last
 beta = 0.1
 
@@ -363,12 +370,19 @@ smpl @all
 lrb.solve
 smpl 1850 @last
 graph gdp_2.line y_2
+gdp_2.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\gdp_2"
 graph region_gdp_2.line y_e_2 y_w_2
+region_gdp_2.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\region_gdp_2"
 graph wealth_2.line v_e_2 v_w_2
+wealth_2.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\wealth_2"
 graph consumption_2.line c_e_2 c_w_2
+consumption_2.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\consumption_2"
 graph transfer_2.line nt_2
+transfer_2.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\transfer_2"
 graph ratio_2.line y_e_2/y_w_2
+ratio_2.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\ratio_2"
 graph di_2.line di_e_2 di_w_2
+di_2.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\di_2"
 smpl 1850 @last
 mu_w = 0.2
 
@@ -380,12 +394,19 @@ smpl @all
 lrb.solve
 smpl 1850 @last
 graph gdp_3.line y_3
+gdp_3.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\gdp_3"
 graph region_gdp_3.line y_e_3 y_w_3
+region_gdp_3.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\region_gdp_3"
 graph wealth_3.line v_e_3 v_w_3
+wealth_3.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\wealth_3"
 graph consumption_3.line c_e_3 c_w_3
+consumption_3.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\consumption_3"
 graph transfer_3.line nt_3
+transfer_3.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\transfer_3"
 graph ratio_3.line y_e_3/y_w_3
+ratio_3.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\ratio_3"
 graph di_3.line di_e_3 di_w_3
+di_3.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\di_3"
 smpl 1850 @last
 beta = 0.1
 
@@ -397,12 +418,19 @@ smpl @all
 lrb.solve
 smpl 1850 @last
 graph gdp_4.line y_4
+gdp_4.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\gdp_4"
 graph region_gdp_4.line y_e_4 y_w_4
+region_gdp_4.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\region_gdp_4"
 graph wealth_4.line v_e_4 v_w_4
+wealth_4.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\wealth_4"
 graph consumption_4.line c_e_4 c_w_4
+consumption_4.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\consumption_4"
 graph transfer_4.line nt_4
+transfer_4.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\transfer_4"
 graph ratio_4.line y_e_4/y_w_4
+ratio_4.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\ratio_4"
 graph di_4.line di_e_4 di_w_4
+di_4.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\di_4"
 smpl 1850 @last
 g_w = 50
 
@@ -414,12 +442,19 @@ smpl @all
 lrb.solve
 smpl 1850 @last
 graph gdp_5.line y_5
+gdp_5.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\gdp_5"
 graph region_gdp_5.line y_e_5 y_w_5
+region_gdp_5.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\region_gdp_5"
 graph wealth_5.line v_e_5 v_w_5
+wealth_5.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\wealth_5"
 graph consumption_5.line c_e_5 c_w_5
+consumption_5.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\consumption_5"
 graph transfer_5.line nt_5
+transfer_5.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\transfer_5"
 graph ratio_5.line y_e_5/y_w_5
+ratio_5.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\ratio_5"
 graph di_5.line di_e_5 di_w_5
+di_5.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\di_5"
 smpl 1850 @last
 g_e = 100
 
@@ -432,12 +467,19 @@ smpl @all
 lrb.solve
 smpl 1850 @last
 graph gdp_6.line y_6
+gdp_6.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\gdp_6"
 graph region_gdp_6.line y_e_6 y_w_6
+region_gdp_6.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\region_gdp_6"
 graph wealth_6.line v_e_6 v_w_6
+wealth_6.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\wealth_6"
 graph consumption_6.line c_e_6 c_w_6
+consumption_6.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\consumption_6"
 graph transfer_6.line nt_6
+transfer_6.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\transfer_6"
 graph ratio_6.line y_e_6/y_w_6
+ratio_6.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\ratio_6"
 graph di_6.line di_e_6 di_w_6
+di_6.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\di_6"
 smpl 1850 @last
 r_l = 0.02
 r_d = 0.02
@@ -450,12 +492,19 @@ smpl @all
 lrb.solve
 smpl 1850 @last
 graph gdp_7.line y_7
+gdp_7.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\gdp_7"
 graph region_gdp_7.line y_e_7 y_w_7
+region_gdp_7.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\region_gdp_7"
 graph wealth_7.line v_e_7 v_w_7
+wealth_7.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\wealth_7"
 graph consumption_7.line c_e_7 c_w_7
+consumption_7.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\consumption_7"
 graph transfer_7.line nt_7
+transfer_7.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\transfer_7"
 graph ratio_7.line y_e_7/y_w_7
+ratio_7.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\ratio_7"
 graph di_7.line di_e_7 di_w_7
+di_7.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\di_7"
 smpl 1850 @last
 theta = 0.2
 
@@ -468,12 +517,19 @@ smpl @all
 lrb.solve
 smpl 1850 @last
 graph gdp_8.line y_8
+gdp_8.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\gdp_8"
 graph region_gdp_8.line y_e_8 y_w_8
+region_gdp_8.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\region_gdp_8"
 graph wealth_8.line v_e_8 v_w_8
+wealth_8.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\wealth_8"
 graph consumption_8.line c_e_8 c_w_8
+consumption_8.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\consumption_8"
 graph transfer_8.line nt_8
+transfer_8.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\transfer_8"
 graph ratio_8.line y_e_8/y_w_8
+ratio_8.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\ratio_8"
 graph di_8.line di_e_8 di_w_8
+di_8.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\di_8"
 smpl 1850 @last
 mu_e = 0.1
 mu_w = 0.2
@@ -486,15 +542,25 @@ smpl @all
 lrb.solve
 smpl 1850 @last
 graph gdp_9.line y_9
+gdp_9.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\gdp_9"
 graph region_gdp_9.line y_e_9 y_w_9
+region_gdp_9.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\region_gdp_9"
 graph wealth_9.line v_e_9 v_w_9
+wealth_9.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\wealth_9"
 graph consumption_9.line c_e_9 c_w_9
+consumption_9.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\consumption_9"
 graph transfer_9.line nt_9
+transfer_9.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\transfer_9"
 graph ratio_9.line y_e_9/y_w_9
+ratio_9.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\ratio_9"
 graph di_9.line di_e_9 di_w_9
+di_9.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\di_9"
 graph investment_east_9.line i_e_9
+investment_east_9.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\i_e_9"
 graph capital_east_9.line k_e_9
+capital_east_9.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\k_e_9"
 graph wage_east_9.line wb_e_9
+wage_east_9.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\wb_e_9"
 smpl 1850 @last
 k_ratio_e = 2
 
@@ -506,11 +572,18 @@ smpl @all
 lrb.solve
 smpl 1850 @last
 graph gdp_10.line y_10
+gdp_10.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\gdp_10"
 graph region_gdp_10.line y_e_10 y_w_10
+region_gdp_10.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\region_gdp_10"
 graph wealth_10.line v_e_10 v_w_10
+wealth_10.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\wealth_10"
 graph consumption_10.line c_e_10 c_w_10
+consumption_10.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\consumption_10"
 graph transfer_10.line nt_10
+transfer_10.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\transfer_10"
 graph ratio_10.line y_e_10/y_w_10
+ratio_10.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\ratio_10"
 graph di_10.line di_e_10 di_w_10
+di_10.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\di_10"
 smpl 1850 @last
 r_b = 0.04

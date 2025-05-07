@@ -249,7 +249,7 @@ k_ratio_w = 2
 gamma = 0.2
 mu_e = 0.1
 mu_w = 0.2
-beta = 0.1
+beta = 0
 g_e = 100
 g_w = 50
 r_d = 0.02
@@ -338,23 +338,6 @@ lrb.append h = b_cb + m_cb
 smpl 1701 @last
 lrb.solve
 
-'increase transfer
-lrb.scenario(n, a="_1")  "Scenario a"
-smpl 1900 @last
-beta = 0.15
-smpl @all
-lrb.solve
-smpl 1850 @last
-graph gdp_1.line y_1
-graph region_gdp_1.line y_e_1 y_w_1
-graph wealth_1.line v_e_1 v_w_1
-graph consumption_1.line c_e_1 c_w_1
-graph transfer_1.line nt_1
-graph ratio_1.line y_e_1/y_w_1
-graph di_1.line di_e_1 di_w_1
-smpl 1850 @last
-beta = 0.1
-
 'reduce Import
 lrb.scenario(n, a="_2")  "Scenario b"
 smpl 1900 @last
@@ -371,23 +354,6 @@ graph ratio_2.line y_e_2/y_w_2
 graph di_2.line di_e_2 di_w_2
 smpl 1850 @last
 mu_w = 0.2
-
-'reduce transfer
-lrb.scenario(n, a="_3")  "Scenario c"
-smpl 1900 @last
-beta = 0.05
-smpl @all
-lrb.solve
-smpl 1850 @last
-graph gdp_3.line y_3
-graph region_gdp_3.line y_e_3 y_w_3
-graph wealth_3.line v_e_3 v_w_3
-graph consumption_3.line c_e_3 c_w_3
-graph transfer_3.line nt_3
-graph ratio_3.line y_e_3/y_w_3
-graph di_3.line di_e_3 di_w_3
-smpl 1850 @last
-beta = 0.1
 
 'increase government expenditure in west
 lrb.scenario(n, a="_4")  "Scenario d"
