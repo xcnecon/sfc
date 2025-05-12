@@ -1,4 +1,3 @@
-' Please do not run the whole file but run each part separately as there are too many graphs
 ' -----------------------------------------------------------
 ' Model Setup and Variable Declarations
 ' -----------------------------------------------------------
@@ -8,99 +7,185 @@ wfcreate(wf=lrb, page=quarter) a 1500 2100
 ' Exogenous Variables (Parameters)
 ' -----------------------------
 series theta              ' Tax rate
+theta.displayname Tax rate
 series alpha_0_e          ' Autonomous consumption (East)
+alpha_0_e.displayname Autonomous consumption (East)
 series alpha_0_w          ' Autonomous consumption (West)
+alpha_0_w.displayname Autonomous consumption (West)
 series alpha_1_e          ' Propensity to consume out of wages (East)
+alpha_1_e.displayname Propensity to consume out of wages (East)
 series alpha_1_w          ' Propensity to consume out of wages (West)
+alpha_1_w.displayname Propensity to consume out of wages (West)
 series alpha_2_w          ' Propensity to consume out of transfer payments (West)
+alpha_2_w.displayname Propensity to consume out of transfer payments (West)
 series alpha_3_e          ' Propensity to consume out of interest income (East)
+alpha_3_e.displayname Propensity to consume out of interest income (East)
 series alpha_3_w          ' Propensity to consume out of interest income (West)
+alpha_3_w.displayname Propensity to consume out of interest income (West)
 series alpha_4_e          ' Propensity to consume out of past net worth (East)
+alpha_4_e.displayname Propensity to consume out of past net worth (East)
 series alpha_4_w          ' Propensity to consume out of past net worth (West)
+alpha_4_w.displayname Propensity to consume out of past net worth (West)
 series delta              ' Depreciation rate
+delta.displayname Depreciation rate
 series k_ratio_e          ' Target capital-output ratio East
+k_ratio_e.displayname Target capital-output ratio East
 series k_ratio_w          ' Target capital-output ratio West
+k_ratio_w.displayname Target capital-output ratio West
 series gamma              ' Adjustment parameter towards target capital stock
+gamma.displayname Adjustment parameter towards target capital stock
 series mu_e               ' Import propensity (East)
+mu_e.displayname Import propensity (East)
 series mu_w               ' Import propensity (West)
+mu_w.displayname Import propensity (West)
 series beta               ' Transfer rate on wages (remittance parameter)
+beta.displayname Transfer rate on wages
 series g_e                ' Government expenditure (East)
+g_e.displayname Government expenditure (East)
 series g_w                ' Government expenditure (West)
+g_w.displayname Government expenditure (West)
 series r_d                ' Interest rate on deposits
+r_d.displayname Interest rate on deposits
 series r_l                ' Interest rate on loans
+r_l.displayname Interest rate on loans
 series r_b                ' Interest rate on bills
+r_b.displayname Interest rate on bills
 series lambda_20_e        ' Autonomous deposit demand (East)
+lambda_20_e.displayname Autonomous deposit demand (East)
 series lambda_20_w        ' Autonomous deposit demand (West)
+lambda_20_w.displayname Autonomous deposit demand (West)
 series lambda_22_e        ' Effect of deposit rate on deposit demand (East)
+lambda_22_e.displayname Effect of deposit rate on deposit demand (East)
 series lambda_22_w        ' Effect of deposit rate on deposit demand (West)
+lambda_22_w.displayname Effect of deposit rate on deposit demand (West)
 series lambda_23_e        ' Effect of bill rate on deposit demand (East)
+lambda_23_e.displayname Effect of bill rate on deposit demand (East)
 series lambda_23_w        ' Effect of bill rate on deposit demand (West)
+lambda_23_w.displayname Effect of bill rate on deposit demand (West)
 series lambda_24_e        ' Effect of income-to-wealth ratio on deposit demand (East)
+lambda_24_e.displayname Effect of income-to-wealth ratio on deposit demand (East)
 series lambda_24_w        ' Effect of income-to-wealth ratio on deposit demand (West)
+lambda_24_w.displayname Effect of income-to-wealth ratio on deposit demand (West)
 series lambda_30_e        ' Autonomous bill demand (East)
+lambda_30_e.displayname Autonomous bill demand (East)
 series lambda_30_w        ' Autonomous bill demand (West)
+lambda_30_w.displayname Autonomous bill demand (West)
 series lambda_32_e        ' Effect of deposit rate on bill demand (East)
+lambda_32_e.displayname Effect of deposit rate on bill demand (East)
 series lambda_32_w        ' Effect of deposit rate on bill demand (West)
+lambda_32_w.displayname Effect of deposit rate on bill demand (West)
 series lambda_33_e        ' Effect of bill rate on bill demand (East)
+lambda_33_e.displayname Effect of bill rate on bill demand (East)
 series lambda_33_w        ' Effect of bill rate on bill demand (West)
+lambda_33_w.displayname Effect of bill rate on bill demand (West)
 series lambda_34_e        ' Effect of income-to-wealth ratio on bill demand (East)
+lambda_34_e.displayname Effect of income-to-wealth ratio on bill demand (East)
 series lambda_34_w        ' Effect of income-to-wealth ratio on bill demand (West)
+lambda_34_w.displayname Effect of income-to-wealth ratio on bill demand (West)
 
 ' -----------------------------
 ' Stock Variables (Levels)
 ' -----------------------------
 series m_e                ' Bank deposit held by east households
+m_e.displayname Bank deposit held by east households
 series m_w                ' Bank deposit held by west households
+m_w.displayname Bank deposit held by west households
 series m_cb               ' Bank deposit held by central bank
+m_cb.displayname Bank deposit held by central bank
 series m                  ' Total money deposits
+m.displayname Total money deposits
 series l_e                ' Loans to east firms
+l_e.displayname Loans to east firms
 series l_w                ' Loans to west firms
+l_w.displayname Loans to west firms
 series l                  ' Total loans
+l.displayname Total loans
 series h_e                ' Cash held by east households
+h_e.displayname Cash held by east households
 series h_w                ' Cash held by west households
+h_w.displayname Cash held by west households
 series h                  ' Total cash
+h.displayname Total cash
 series b_e                ' Bills held by east households
+b_e.displayname Bills held by east households
 series b_w                ' Bills held by west households
+b_w.displayname Bills held by west households
 series b_cb               ' Bills held by central bank
+b_cb.displayname Bills held by central bank
 series b                  ' Total bills
+b.displayname Total bills
 series k_e                ' Capital stock of east firms
+k_e.displayname Capital stock of east firms
 series k_w                ' Capital stock of west firms
+k_w.displayname Capital stock of west firms
 series k_tot              ' Total capital stock
+k_tot.displayname Total capital stock
 series v_e                ' Net worth of east households
+v_e.displayname Net worth of east households
 series v_w                ' Net worth of west households
+v_w.displayname Net worth of west households
 
 ' -----------------------------
 ' Flow Variables (Period Flows)
 ' -----------------------------
 series c_e                ' Consumption of east households
+c_e.displayname Consumption of east households
 series c_w                ' Consumption of west households
+c_w.displayname Consumption of west households
 series i_e                ' Investment by east firms
+i_e.displayname Investment by east firms
 series i_w                ' Investment by west firms
+i_w.displayname Investment by west firms
 series g                  ' Total government expenditure
+g.displayname Total government expenditure
 series x_e                ' Exports from east
+x_e.displayname Exports from east
 series x_w                ' Exports from west
+x_w.displayname Exports from west
 series im_e               ' Imports to east
+im_e.displayname Imports to east
 series im_w               ' Imports to west
+im_w.displayname Imports to west
 series y_e                ' GDP of east
+y_e.displayname GDP of east
 series y_w                ' GDP of west
+y_w.displayname GDP of west
 series y                  ' Aggregate GDP
+y.displayname Aggregate GDP
 series wb_e               ' Wage bill of east
+wb_e.displayname Wage bill of east
 series wb_w               ' Wage bill of west
+wb_w.displayname Wage bill of west
 series af_e               ' Depreciation of east capital
+af_e.displayname Depreciation of east capital
 series af_w               ' Depreciation of west capital
+af_w.displayname Depreciation of west capital
 series nt                 ' Net transfer from east to west (remittance)
+nt.displayname Net transfer from east to west
 series t_e                ' Taxes from east
+t_e.displayname Taxes from east
 series t_w                ' Taxes from west
+t_w.displayname Taxes from west
 series t                  ' Total tax revenue
+t.displayname Total tax revenue
 series di_e               ' Disposable income of east households
+di_e.displayname Disposable income of east households
 series di_w               ' Disposable income of west households
+di_w.displayname Disposable income of west households
 series k_t_e              ' Target capital stock for east
+k_t_e.displayname Target capital stock for east
 series k_t_w              ' Target capital stock for west
+k_t_w.displayname Target capital stock for west
 series d_l_e              ' Change in loans to east firms
+d_l_e.displayname Change in loans to east firms
 series d_l_w              ' Change in loans to west firms
+d_l_w.displayname Change in loans to west firms
 series d_b                ' Change in total bills
+d_b.displayname Change in total bills
 series int_l              ' Interest paid on loans
+int_l.displayname Interest paid on loans
 series int_d              ' Interest received on deposits
+int_d.displayname Interest received on deposits
 
 ' -----------------------------------------------------------
 ' Initialization: Set all variables to 0 for all periods
@@ -386,8 +471,6 @@ mu_e = 0.2
 ' -----------------------------------------------------------
 ' Scenarios 7-12 repeat the above shocks with different normalization or parameterization
 ' (see above for scenario structure; comments omitted for brevity)
-' -----------------------------------------------------------
-' Scenario: does remittance stabalise shocks in west?
 
 lrb.scenario(n, a="_7")  "Scenario 7"
 smpl 1900 @last
