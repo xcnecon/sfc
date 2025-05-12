@@ -1,0 +1,22 @@
+---
+title: "Baseline Parameters Table"
+format:
+  html:
+    self-contained: true
+    page-layout: full
+    embed-resources: true
+---
+
+## Baseline Exogenous Parameters
+
+| Parameter      | Value | Parameter      | Value | Parameter      | Value | Parameter      | Value |
+|----------------|-------|---------------|-------|---------------|-------|---------------|-------|
+| $\theta$         | 0.2   | $\alpha_0^E$     | 20    | $\alpha_0^W$     | 20    | $\alpha_1^E$     | 0.6   |
+| $\alpha_1^W$     | 0.8   | $\alpha_2^W$     | 0.9   | $\alpha_3^E$     | 0.5   | $\alpha_3^W$     | 0.5   |
+| $\alpha_4^E$     | 0.1   | $\alpha_4^W$     | 0.1   | $\delta$         | 0.1   | $k_{ratio}^E$    | 2     |
+| $k_{ratio}^W$    | 2     | $\gamma$         | 0.2   | $\mu^E$          | 0.1   | $\mu^W$          | 0.2   |
+| $\beta$          | 0.1   | $g^E$            | 100   | $g^W$            | 50    | $r_d$            | 0.02  |
+| $r_l$            | 0.02  | $r_b$            | 0.04  | $\lambda_{20}^E$ | 0.4   | $\lambda_{20}^W$ | 0.4   |
+| $\lambda_{22}^E$ | 0.02  | $\lambda_{22}^W$ | 0.02  | $\lambda_{23}^E$ | -0.02 | $\lambda_{23}^W$ | -0.02 |
+| $\lambda_{30}^E$ | 0.4   | $\lambda_{30}^W$ | 0.4   | $\lambda_{32}^E$ | -0.02 | $\lambda_{32}^W$ | -0.02 |
+| $\lambda_{33}^E$ | 0.02  | $\lambda_{33}^W$ | 0.02  |                 |       |                 |       | 

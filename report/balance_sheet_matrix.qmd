@@ -14,22 +14,22 @@ format:
     width: 100%;
     table-layout: fixed;
     margin: 30px 0;
-    font-size: 14px;
+    font-size: 11px;
     border-collapse: collapse;
     border-spacing: 0;
     border: none !important;
   }
   .matrix-table th:first-child,
   .matrix-table td:first-child {
-    width: 140px;
+    width: 100px;
     text-align: left;
     white-space: nowrap;
-    padding-left: 10px;
+    padding-left: 6px;
   }
   .matrix-table th, 
   .matrix-table td {
-    padding: 10px 6px;
-    min-width: 100px;
+    padding: 4px 2px;
+    min-width: 70px;
     white-space: nowrap;
     text-align: center;
     border: none !important;
@@ -115,15 +115,15 @@ format:
   }
   
   /* Column width adjustments */
-  .col-households { min-width: 120px; }
-  .col-firms { min-width: 90px; }
-  .col-government { min-width: 100px; }
-  .col-banks { min-width: 110px; }
-  .col-central { min-width: 110px; }
+  .col-households { min-width: 80px; }
+  .col-firms { min-width: 60px; }
+  .col-government { min-width: 70px; }
+  .col-banks { min-width: 75px; }
+  .col-central { min-width: 75px; }
   
   @media print {
     body { width: 100%; }
-    .matrix-table { width: 100%; font-size: 10pt; }
+    .matrix-table { width: 100%; font-size: 8pt; }
   }
   
   /* Capital gain row styling */
@@ -588,9 +588,9 @@ This models builds upon models LP, REG and BMW. The two regions have uneuqal dev
 
 ### Consumption
 
-$$ C^E = alpha0^E + (WB^E - NT)(1-\theta)\alpha_1^E + (r_{d-1}M^E_{-1} + r_{b-1}B^E_{-1})(1-\theta)\alpha_3^E + \alpha_4^E V^E_{-1} \tag{1}$$
+$$ C^E = \alpha_0^E + (WB^E - NT)(1-\theta)\alpha_1^E + (r_{d-1}M^E_{-1} + r_{b-1}B^E_{-1})(1-\theta)\alpha_3^E + \alpha_4^E V^E_{-1} \tag{1}$$
 
-$$ C^W = alpha0^W + (1-\theta)[\alpha_1^W WB^W + \alpha_2^W NT + \alpha_3^W (r_{d-1}M^W_{-1} + r_{b-1}B^W_{-1})] + \alpha_4^W V^W_{-1} \tag{2} $$
+$$ C^W = \alpha_0^W + (1-\theta)[\alpha_1^W WB^W + \alpha_2^W NT + \alpha_3^W (r_{d-1}M^W_{-1} + r_{b-1}B^W_{-1})] + \alpha_4^W V^W_{-1} \tag{2} $$
 
 $$WB^E = Y^E - r_{l-1} \cdot L^E_{-1} - AF^E \tag{3}$$
 

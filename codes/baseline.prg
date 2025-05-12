@@ -1,183 +1,110 @@
+' Please do not run the whole file but run each part separately as there are too many graphs
+' -----------------------------------------------------------
+' Model Setup and Variable Declarations
+' -----------------------------------------------------------
 wfcreate(wf=lrb, page=quarter) a 1500 2100
-' exogenous variables
-series theta
-theta.displayname Tax rate
-series alpha_0_e
-alpha_0_e.displayname Autonomous consumption (East)
-series alpha_0_w
-alpha_0_w.displayname Autonomous consumption (West)
-series alpha_1_e
-alpha_1_e.displayname Propensity to consume out of wages (East)
-series alpha_1_w
-alpha_1_w.displayname Propensity to consume out of wages (West)
-series alpha_2_w
-alpha_2_w.displayname Propensity to consume out of transfer payments (West)
-series alpha_3_e
-alpha_3_e.displayname Propensity to consume out of interest income (East)
-series alpha_3_w
-alpha_3_w.displayname Propensity to consume out of interest income (West)
-series alpha_4_e
-alpha_4_e.displayname Propensity to consume out of past net worth (East)
-series alpha_4_w
-alpha_4_w.displayname Propensity to consume out of past net worth (West)
-series delta
-delta.displayname Depreciation rate
-series k_ratio_e
-k_ratio_e.displayname Target capital-output ratio East
-series k_ratio_w
-k_ratio_w.displayname Target capital-output ratio West
-series gamma
-gamma.displayname Adjustment parameter towards target capital stock
-series mu_e
-mu_e.displayname Import propensity (East)
-series mu_w
-mu_w.displayname Import propensity (West)
-series beta
-beta.displayname Transfer rate on wages
-series g_e
-g_e.displayname Government expenditure (East)
-series g_w
-g_w.displayname Government expenditure (West)
-series r_d
-r_d.displayname Interest rate on deposits
-series r_l
-r_l.displayname Interest rate on loans
-series r_b
-r_b.displayname Interest rate on bills
-series lambda_20_e
-lambda_20_e.displayname Autonomous deposit demand (East)
-series lambda_20_w
-lambda_20_w.displayname Autonomous deposit demand (West)
-series lambda_22_e
-lambda_22_e.displayname Effect of deposit rate on deposit demand (East)
-series lambda_22_w
-lambda_22_w.displayname Effect of deposit rate on deposit demand (West)
-series lambda_23_e
-lambda_23_e.displayname Effect of bill rate on deposit demand (East)
-series lambda_23_w
-lambda_23_w.displayname Effect of bill rate on deposit demand (West)
-series lambda_24_e
-lambda_24_e.displayname Effect of income-to-wealth ratio on deposit demand (East)
-series lambda_24_w
-lambda_24_w.displayname Effect of income-to-wealth ratio on deposit demand (West)
-series lambda_30_e
-lambda_30_e.displayname Autonomous bill demand (East)
-series lambda_30_w
-lambda_30_w.displayname Autonomous bill demand (West)
-series lambda_32_e
-lambda_32_e.displayname Effect of deposit rate on bill demand (East)
-series lambda_32_w
-lambda_32_w.displayname Effect of deposit rate on bill demand (West)
-series lambda_33_e
-lambda_33_e.displayname Effect of bill rate on bill demand (East)
-series lambda_33_w
-lambda_33_w.displayname Effect of bill rate on bill demand (West)
-series lambda_34_e
-lambda_34_e.displayname Effect of income-to-wealth ratio on bill demand (East)
-series lambda_34_w
-lambda_34_w.displayname Effect of income-to-wealth ratio on bill demand (West)
 
-' stock variables
-series m_e
-m_e.displayname Bank deposit held by east households
-series m_w
-m_w.displayname Bank deposit held by west households
-series m_cb
-m_cb.displayname Bank deposit held by central bank
-series m
-m.displayname Total money deposits
-series l_e
-l_e.displayname Loans to east firms
-series l_w
-l_w.displayname Loans to west firms
-series l
-l.displayname Total loans
-series h_e
-h_e.displayname Cash held by east households
-series h_w
-h_w.displayname Cash held by west households
-series h
-h.displayname Total cash
-series b_e
-b_e.displayname Bills held by east households
-series b_w
-b_w.displayname Bills held by west households
-series b_cb
-b_cb.displayname Bills held by central bank
-series b
-b.displayname Total bills
-series k_e
-k_e.displayname Capital stock of east firms
-series k_w
-k_w.displayname Capital stock of west firms
-series k_tot
-k_tot.displayname Total capital stock
-series v_e
-v_e.displayname Net worth of east households
-series v_w
-v_w.displayname Net worth of west households
+' -----------------------------
+' Exogenous Variables (Parameters)
+' -----------------------------
+series theta              ' Tax rate
+series alpha_0_e          ' Autonomous consumption (East)
+series alpha_0_w          ' Autonomous consumption (West)
+series alpha_1_e          ' Propensity to consume out of wages (East)
+series alpha_1_w          ' Propensity to consume out of wages (West)
+series alpha_2_w          ' Propensity to consume out of transfer payments (West)
+series alpha_3_e          ' Propensity to consume out of interest income (East)
+series alpha_3_w          ' Propensity to consume out of interest income (West)
+series alpha_4_e          ' Propensity to consume out of past net worth (East)
+series alpha_4_w          ' Propensity to consume out of past net worth (West)
+series delta              ' Depreciation rate
+series k_ratio_e          ' Target capital-output ratio East
+series k_ratio_w          ' Target capital-output ratio West
+series gamma              ' Adjustment parameter towards target capital stock
+series mu_e               ' Import propensity (East)
+series mu_w               ' Import propensity (West)
+series beta               ' Transfer rate on wages (remittance parameter)
+series g_e                ' Government expenditure (East)
+series g_w                ' Government expenditure (West)
+series r_d                ' Interest rate on deposits
+series r_l                ' Interest rate on loans
+series r_b                ' Interest rate on bills
+series lambda_20_e        ' Autonomous deposit demand (East)
+series lambda_20_w        ' Autonomous deposit demand (West)
+series lambda_22_e        ' Effect of deposit rate on deposit demand (East)
+series lambda_22_w        ' Effect of deposit rate on deposit demand (West)
+series lambda_23_e        ' Effect of bill rate on deposit demand (East)
+series lambda_23_w        ' Effect of bill rate on deposit demand (West)
+series lambda_24_e        ' Effect of income-to-wealth ratio on deposit demand (East)
+series lambda_24_w        ' Effect of income-to-wealth ratio on deposit demand (West)
+series lambda_30_e        ' Autonomous bill demand (East)
+series lambda_30_w        ' Autonomous bill demand (West)
+series lambda_32_e        ' Effect of deposit rate on bill demand (East)
+series lambda_32_w        ' Effect of deposit rate on bill demand (West)
+series lambda_33_e        ' Effect of bill rate on bill demand (East)
+series lambda_33_w        ' Effect of bill rate on bill demand (West)
+series lambda_34_e        ' Effect of income-to-wealth ratio on bill demand (East)
+series lambda_34_w        ' Effect of income-to-wealth ratio on bill demand (West)
 
-' flow variables
-series c_e
-c_e.displayname Consumption of east households
-series c_w
-c_w.displayname Consumption of west households
-series i_e
-i_e.displayname Investment by east firms
-series i_w
-i_w.displayname Investment by west firms
-series g
-g.displayname Total government expenditure
-series x_e
-x_e.displayname Exports from east
-series x_w
-x_w.displayname Exports from west
-series im_e
-im_e.displayname Imports to east
-series im_w
-im_w.displayname Imports to west
-series y_e
-y_e.displayname GDP of east
-series y_w
-y_w.displayname GDP of west
-series y
-y.displayname Aggregate GDP
-series wb_e
-wb_e.displayname Wage bill of east
-series wb_w
-wb_w.displayname Wage bill of west
-series af_e
-af_e.displayname Depreciation of east capital
-series af_w
-af_w.displayname Depreciation of west capital
-series nt
-nt.displayname Net transfer from east to west
-series t_e
-t_e.displayname Taxes from east
-series t_w
-t_w.displayname Taxes from west
-series t
-t.displayname Total tax revenue
-series di_e
-di_e.displayname Disposable income of east households
-series di_w
-di_w.displayname Disposable income of west households
-series k_t_e
-k_t_e.displayname Target capital stock for east
-series k_t_w
-k_t_w.displayname Target capital stock for west
-series d_l_e
-d_l_e.displayname Change in loans to east firms
-series d_l_w
-d_l_w.displayname Change in loans to west firms
-series d_b
-d_b.displayname Change in total bills
-series int_l
-int_l.displayname Interest paid on loans
-series int_d
-int_d.displayname Interest received on deposits
+' -----------------------------
+' Stock Variables (Levels)
+' -----------------------------
+series m_e                ' Bank deposit held by east households
+series m_w                ' Bank deposit held by west households
+series m_cb               ' Bank deposit held by central bank
+series m                  ' Total money deposits
+series l_e                ' Loans to east firms
+series l_w                ' Loans to west firms
+series l                  ' Total loans
+series h_e                ' Cash held by east households
+series h_w                ' Cash held by west households
+series h                  ' Total cash
+series b_e                ' Bills held by east households
+series b_w                ' Bills held by west households
+series b_cb               ' Bills held by central bank
+series b                  ' Total bills
+series k_e                ' Capital stock of east firms
+series k_w                ' Capital stock of west firms
+series k_tot              ' Total capital stock
+series v_e                ' Net worth of east households
+series v_w                ' Net worth of west households
 
-' First, initialize all variables to 0 for all periods
+' -----------------------------
+' Flow Variables (Period Flows)
+' -----------------------------
+series c_e                ' Consumption of east households
+series c_w                ' Consumption of west households
+series i_e                ' Investment by east firms
+series i_w                ' Investment by west firms
+series g                  ' Total government expenditure
+series x_e                ' Exports from east
+series x_w                ' Exports from west
+series im_e               ' Imports to east
+series im_w               ' Imports to west
+series y_e                ' GDP of east
+series y_w                ' GDP of west
+series y                  ' Aggregate GDP
+series wb_e               ' Wage bill of east
+series wb_w               ' Wage bill of west
+series af_e               ' Depreciation of east capital
+series af_w               ' Depreciation of west capital
+series nt                 ' Net transfer from east to west (remittance)
+series t_e                ' Taxes from east
+series t_w                ' Taxes from west
+series t                  ' Total tax revenue
+series di_e               ' Disposable income of east households
+series di_w               ' Disposable income of west households
+series k_t_e              ' Target capital stock for east
+series k_t_w              ' Target capital stock for west
+series d_l_e              ' Change in loans to east firms
+series d_l_w              ' Change in loans to west firms
+series d_b                ' Change in total bills
+series int_l              ' Interest paid on loans
+series int_d              ' Interest received on deposits
+
+' -----------------------------------------------------------
+' Initialization: Set all variables to 0 for all periods
+' -----------------------------------------------------------
 smpl @all
 ' Flow variables
 c_e = 0
@@ -230,7 +157,9 @@ k_tot = 0
 v_e = 0
 v_w = 0
 
-' Second, set values for exogenous parameters
+' -----------------------------------------------------------
+' Set Baseline Values for Exogenous Parameters
+' -----------------------------------------------------------
 smpl @all
 ' exogenous variables
 theta = 0.2
@@ -268,18 +197,19 @@ lambda_32_w = -0.02
 lambda_33_e = 0.02
 lambda_33_w = 0.02
 
-
-' Create model definition
+' -----------------------------------------------------------
+' Model Definition and Equations
+' -----------------------------------------------------------
 model lrb
 
-'add equations
-'Consumption equations
+' Add behavioral and accounting equations to the model
+' --- Household Consumption Equations ---
 lrb.append c_e = alpha_0_e + (wb_e - nt)*(1-theta)*alpha_1_e + (r_d(-1)*m_e(-1) + r_b(-1)*b_e(-1))*(1-theta)*alpha_3_e + v_e*alpha_4_e
 lrb.append c_w = alpha_0_w + (1-theta)*(alpha_1_w * wb_w + alpha_2_w * nt + alpha_3_w * (r_d(-1)*m_w(-1) + r_b(-1)*b_w(-1))) + alpha_4_w * v_w
 lrb.append wb_e = y_e - r_l(-1) * l_e(-1) - af_e
 lrb.append wb_w = y_w - r_l(-1) * l_w(-1) - af_w
 
-'Capital Investment
+' --- Capital and Investment Equations ---
 lrb.append r_d = r_l
 lrb.append af_e = delta * k_e(-1)
 lrb.append af_w = delta * k_w(-1)
@@ -296,18 +226,18 @@ lrb.append l_w = l_w(-1) + d_l_w
 lrb.append l = l_e + l_w
 lrb.append k_tot = k_e + k_w
 
-'Trade and transfers
+' --- Trade and Transfers ---
 lrb.append im_e = mu_e * y_e
 lrb.append im_w = mu_w * y_w
 lrb.append x_e = im_w
 lrb.append x_w = im_e
-lrb.append nt = (wb_e*(1-theta)* beta) * (wb_e > 0)
+lrb.append nt = (wb_e*(1-theta)* beta) * (wb_e > 0)   ' Remittance from east to west
 
-'Interest payments
+' --- Interest Payments ---
 lrb.append int_l = r_l(-1) * l_w(-1) + r_l(-1) * l_e(-1)
 lrb.append int_d = r_d(-1) * m_w(-1) + r_d(-1) * m_e(-1)
 
-'Government
+' --- Government and Output ---
 lrb.append y_e = c_e + i_e + g_e + x_e - im_e
 lrb.append y_w = c_w + i_w + g_w + x_w - im_w
 lrb.append y = y_e + y_w
@@ -318,7 +248,7 @@ lrb.append t = t_e + t_w
 lrb.append d_b = g + r_b(-1) * b(-1) - r_b(-1) * b_cb(-1) - r_d(-1) * m_cb(-1) - t
 lrb.append b = b(-1) + d_b
 
-'Portfolio decisions
+' --- Portfolio Decisions and Wealth Accumulation ---
 lrb.append di_e = wb_e + r_d(-1) * m_e(-1) + r_b(-1) * b_e(-1) - nt - t_e
 lrb.append di_w = wb_w + r_d(-1) * m_w(-1) + r_b(-1) * b_w(-1) + nt - t_w
 lrb.append v_e = v_e(-1) + di_e - c_e
@@ -334,256 +264,218 @@ lrb.append b_cb = b - b_w - b_e
 lrb.append m_cb = m - m_w - m_e
 lrb.append h = b_cb + m_cb
 
-' solve the baseline model
+' -----------------------------------------------------------
+' Baseline Model Solution
+' -----------------------------------------------------------
 smpl 1701 @last
 lrb.solve
 
-'increase transfer
-lrb.scenario(n, a="_1")  "Scenario a"
+' -----------------------------------------------------------
+' Scenario Analysis: Remittance and Shocks in the West
+' -----------------------------------------------------------
+' Scenario 1: Shock to government spending in the West with remittance
+lrb.scenario(o, a="_1")  "Scenario 1"
 smpl 1900 @last
-beta = 0.15
+' Apply negative shock to west government spending
+g_w = 40
 smpl @all
 lrb.solve
-smpl 1850 @last
-graph gdp_1.line y_1
-gdp_1.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\gdp_1"
-graph region_gdp_1.line y_e_1 y_w_1
-region_gdp_1.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\region_gdp_1"
-graph wealth_1.line v_e_1 v_w_1
-wealth_1.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\wealth_1"
-graph consumption_1.line c_e_1 c_w_1
-consumption_1.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\consumption_1"
-graph transfer_1.line nt_1
-transfer_1.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\transfer_1"
-graph ratio_1.line y_e_1/y_w_1
-ratio_1.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\ratio_1"
-graph di_1.line di_e_1 di_w_1
-di_1.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\di_1"
-smpl 1850 @last
-beta = 0.1
-
-'reduce Import
-lrb.scenario(n, a="_2")  "Scenario b"
 smpl 1900 @last
-mu_w = 0.15
-smpl @all
-lrb.solve
-smpl 1850 @last
-graph gdp_2.line y_2
-gdp_2.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\gdp_2"
-graph region_gdp_2.line y_e_2 y_w_2
-region_gdp_2.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\region_gdp_2"
-graph wealth_2.line v_e_2 v_w_2
-wealth_2.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\wealth_2"
-graph consumption_2.line c_e_2 c_w_2
-consumption_2.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\consumption_2"
-graph transfer_2.line nt_2
-transfer_2.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\transfer_2"
-graph ratio_2.line y_e_2/y_w_2
-ratio_2.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\ratio_2"
-graph di_2.line di_e_2 di_w_2
-di_2.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\di_2"
-smpl 1850 @last
-mu_w = 0.2
-
-'reduce transfer
-lrb.scenario(n, a="_3")  "Scenario c"
-smpl 1900 @last
-beta = 0.05
-smpl @all
-lrb.solve
-smpl 1850 @last
-graph gdp_3.line y_3
-gdp_3.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\gdp_3"
-graph region_gdp_3.line y_e_3 y_w_3
-region_gdp_3.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\region_gdp_3"
-graph wealth_3.line v_e_3 v_w_3
-wealth_3.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\wealth_3"
-graph consumption_3.line c_e_3 c_w_3
-consumption_3.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\consumption_3"
-graph transfer_3.line nt_3
-transfer_3.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\transfer_3"
-graph ratio_3.line y_e_3/y_w_3
-ratio_3.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\ratio_3"
-graph di_3.line di_e_3 di_w_3
-di_3.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\di_3"
-smpl 1850 @last
-beta = 0.1
-
-'increase government expenditure in west
-lrb.scenario(n, a="_4")  "Scenario d"
-smpl 1900 @last
-g_w = 70
-smpl @all
-lrb.solve
-smpl 1850 @last
-graph gdp_4.line y_4
-gdp_4.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\gdp_4"
-graph region_gdp_4.line y_e_4 y_w_4
-region_gdp_4.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\region_gdp_4"
-graph wealth_4.line v_e_4 v_w_4
-wealth_4.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\wealth_4"
-graph consumption_4.line c_e_4 c_w_4
-consumption_4.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\consumption_4"
-graph transfer_4.line nt_4
-transfer_4.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\transfer_4"
-graph ratio_4.line y_e_4/y_w_4
-ratio_4.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\ratio_4"
-graph di_4.line di_e_4 di_w_4
-di_4.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\di_4"
-smpl 1850 @last
+' Restore west government spending
 g_w = 50
 
-'increase government expenditure in east
-lrb.scenario(n, a="_5")  "Scenario e"
+' Scenario 2: Same shock, but with remittance turned off (beta = 0)
+lrb.scenario(n, a="_2")  "Scenario 2"
+smpl @all
+beta = 0
 smpl 1900 @last
-g_e = 120
+g_w = 40
 smpl @all
 lrb.solve
+smpl @all
+' Restore parameters
+beta = 0.1
+g_w = 50
+
+' Plot results for Scenarios 1 and 2
 smpl 1850 @last
-graph gdp_5.line y_5
-gdp_5.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\gdp_5"
-graph region_gdp_5.line y_e_5 y_w_5
-region_gdp_5.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\region_gdp_5"
-graph wealth_5.line v_e_5 v_w_5
-wealth_5.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\wealth_5"
-graph consumption_5.line c_e_5 c_w_5
-consumption_5.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\consumption_5"
-graph transfer_5.line nt_5
-transfer_5.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\transfer_5"
-graph ratio_5.line y_e_5/y_w_5
-ratio_5.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\ratio_5"
-graph di_5.line di_e_5 di_w_5
-di_5.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\di_5"
-smpl 1850 @last
+' Plot west GDP (normalized)
+plot y_w_1/358.46 y_w_2/302.50
+' Plot remittance
+plot nt_1
+' Plot east GDP (normalized)
+plot y_e_1/571.28 y_e_2/650.16
+' Plot aggregate GDP (normalized)
+plot y_1/929.75  y_2/952.67
+' -----------------------------------------------------------
+
+' Scenario Analysis: Remittance and Shocks in the East
+' -----------------------------------------------------------
+' Scenario 3: Shock to government spending in the East with remittance
+lrb.scenario(n, a="_3")  "Scenario 3"
+smpl 1900 @last
+g_e = 90
+smpl @all
+lrb.solve
+smpl 1900 @last
 g_e = 100
 
-' increase loan rate
-lrb.scenario(n, a="_6")  "Scenario f"
+' Scenario 4: Same shock, but with remittance turned off (beta = 0)
+lrb.scenario(n, a="_4")  "Scenario 4"
+smpl @all
+beta = 0
 smpl 1900 @last
-r_l = 0.04
-r_d = 0.04
+g_e = 90
 smpl @all
 lrb.solve
-smpl 1850 @last
-graph gdp_6.line y_6
-gdp_6.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\gdp_6"
-graph region_gdp_6.line y_e_6 y_w_6
-region_gdp_6.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\region_gdp_6"
-graph wealth_6.line v_e_6 v_w_6
-wealth_6.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\wealth_6"
-graph consumption_6.line c_e_6 c_w_6
-consumption_6.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\consumption_6"
-graph transfer_6.line nt_6
-transfer_6.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\transfer_6"
-graph ratio_6.line y_e_6/y_w_6
-ratio_6.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\ratio_6"
-graph di_6.line di_e_6 di_w_6
-di_6.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\di_6"
-smpl 1850 @last
-r_l = 0.02
-r_d = 0.02
-
-' increase tax
-lrb.scenario(n, a="_7")  "Scenario g"
-smpl 1900 @last
-theta = 0.3
 smpl @all
-lrb.solve
-smpl 1850 @last
-graph gdp_7.line y_7
-gdp_7.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\gdp_7"
-graph region_gdp_7.line y_e_7 y_w_7
-region_gdp_7.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\region_gdp_7"
-graph wealth_7.line v_e_7 v_w_7
-wealth_7.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\wealth_7"
-graph consumption_7.line c_e_7 c_w_7
-consumption_7.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\consumption_7"
-graph transfer_7.line nt_7
-transfer_7.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\transfer_7"
-graph ratio_7.line y_e_7/y_w_7
-ratio_7.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\ratio_7"
-graph di_7.line di_e_7 di_w_7
-di_7.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\di_7"
-smpl 1850 @last
-theta = 0.2
+beta = 0.1
+g_e = 100
 
-' Embargo
-lrb.scenario(n, a="_8")  "Scenario h"
+' Plot results for Scenarios 3 and 4
+smpl 1850 @last
+plot y_w_3/358.46 y_w_4/302.50   ' West GDP
+plot nt_3                        ' Remittance
+plot y_e_3/571.28 y_e_4/650.16   ' East GDP
+plot y_3/929.75  y_3/952.67      ' Aggregate GDP
+' -----------------------------------------------------------
+
+' Scenario Analysis: Remittance and Embargo Impact
+' -----------------------------------------------------------
+' Scenario 5: Embargo (imports set to zero) with remittance
+lrb.scenario(n, a="_5")  "Scenario 5"
 smpl 1900 @last
 mu_e = 0
 mu_w = 0
 smpl @all
 lrb.solve
-smpl 1850 @last
-graph gdp_8.line y_8
-gdp_8.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\gdp_8"
-graph region_gdp_8.line y_e_8 y_w_8
-region_gdp_8.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\region_gdp_8"
-graph wealth_8.line v_e_8 v_w_8
-wealth_8.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\wealth_8"
-graph consumption_8.line c_e_8 c_w_8
-consumption_8.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\consumption_8"
-graph transfer_8.line nt_8
-transfer_8.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\transfer_8"
-graph ratio_8.line y_e_8/y_w_8
-ratio_8.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\ratio_8"
-graph di_8.line di_e_8 di_w_8
-di_8.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\di_8"
-smpl 1850 @last
+smpl 1900 @last
 mu_e = 0.1
 mu_w = 0.2
 
-' investment shock in east
-lrb.scenario(n, a="_9")  "Scenario i"
+' Scenario 6: Embargo with remittance turned off (beta = 0)
+lrb.scenario(n, a="_6")  "Scenario 6"
+smpl @all
+beta = 0
 smpl 1900 @last
-k_ratio_e = 1.8
+mu_e = 0
+mu_w = 0
 smpl @all
 lrb.solve
-smpl 1850 @last
-graph gdp_9.line y_9
-gdp_9.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\gdp_9"
-graph region_gdp_9.line y_e_9 y_w_9
-region_gdp_9.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\region_gdp_9"
-graph wealth_9.line v_e_9 v_w_9
-wealth_9.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\wealth_9"
-graph consumption_9.line c_e_9 c_w_9
-consumption_9.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\consumption_9"
-graph transfer_9.line nt_9
-transfer_9.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\transfer_9"
-graph ratio_9.line y_e_9/y_w_9
-ratio_9.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\ratio_9"
-graph di_9.line di_e_9 di_w_9
-di_9.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\di_9"
-graph investment_east_9.line i_e_9
-investment_east_9.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\i_e_9"
-graph capital_east_9.line k_e_9
-capital_east_9.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\k_e_9"
-graph wage_east_9.line wb_e_9
-wage_east_9.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\wb_e_9"
-smpl 1850 @last
-k_ratio_e = 2
+smpl @all
+beta = 0.1
+mu_e = 0.1
+mu_w = 0.2
 
-'increase bill rate
-lrb.scenario(n, a="_10")  "Scenario j"
+' Plot results for Scenarios 5 and 6
+smpl 1850 @last
+plot y_w_5/358.46 y_w_6/302.50   ' West GDP
+plot y_e_5/571.28 y_e_6/650.16   ' East GDP
+plot nt_5                        ' Remittance
+plot y_5/929.75  y_6/952.67      ' Aggregate GDP
+plot (x_w_5-im_w_5)/y_w_5 (x_w_6-im_w_6)/y_w_6   ' Net export for west
+' -----------------------------------------------------------
+
+' Additional Scenario: Equalize Import Propensity
+smpl @all
+mu_w = 0.2
+mu_e = 0.2
+' -----------------------------------------------------------
+
+' Repeat Scenario Analysis with Different Baseline (for robustness)
+' -----------------------------------------------------------
+' Scenarios 7-12 repeat the above shocks with different normalization or parameterization
+' (see above for scenario structure; comments omitted for brevity)
+' -----------------------------------------------------------
+' Scenario: does remittance stabalise shocks in west?
+
+lrb.scenario(n, a="_7")  "Scenario 7"
 smpl 1900 @last
-r_b = 0.07
+g_w = 40
 smpl @all
 lrb.solve
+smpl 1900 @last
+g_w = 50
+
+lrb.scenario(n, a="_8")  "Scenario 8"
+smpl @all
+beta = 0
+smpl 1900 @last
+g_w = 40
+smpl @all
+lrb.solve
+smpl @all
+beta = 0.1
+g_w = 50
+
 smpl 1850 @last
-graph gdp_10.line y_10
-gdp_10.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\gdp_10"
-graph region_gdp_10.line y_e_10 y_w_10
-region_gdp_10.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\region_gdp_10"
-graph wealth_10.line v_e_10 v_w_10
-wealth_10.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\wealth_10"
-graph consumption_10.line c_e_10 c_w_10
-consumption_10.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\consumption_10"
-graph transfer_10.line nt_10
-transfer_10.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\transfer_10"
-graph ratio_10.line y_e_10/y_w_10
-ratio_10.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\ratio_10"
-graph di_10.line di_e_10 di_w_10
-di_10.save "C:\Users\CHENY\Documents\GitHub\sfc\output_baseline\di_10"
+' plot west gdp
+plot y_w_7/445.52 y_w_8/410.32
+' plot east gdp
+plot y_e_7/470.25 y_e_8/522.49
+' plot aggregate gdp
+plot y_7/915.78  y_8/932.81
+' -----------------------------------------------------------
+
+' Scenario does remittance amply shocks in the east? 
+lrb.scenario(n, a="_9")  "Scenario 9"
+smpl 1900 @last
+g_e = 90
+smpl @all
+lrb.solve
+smpl 1900 @last
+g_e = 100
+
+lrb.scenario(n, a="_10")  "Scenario 10"
+smpl @all
+beta = 0
+smpl 1900 @last
+g_e = 90
+smpl @all
+lrb.solve
+smpl @all
+beta = 0.1
+g_e = 100
+
 smpl 1850 @last
-r_b = 0.04
+' plot west gdp
+plot y_w_9/445.52 y_w_10/410.32
+' plot east gdp
+plot y_e_9/470.25 y_e_10/522.49
+' plot aggregate gdp
+plot y_9/915.78  y_10/932.81
+' -----------------------------------------------------------
+
+' Scenario: Does Remittance affect the impact of an embargo?
+lrb.scenario(n, a="_11")  "Scenario 11"
+smpl 1900 @last
+mu_e = 0
+mu_w = 0
+smpl @all
+lrb.solve
+smpl 1900 @last
+mu_e = 0.1
+mu_w = 0.2
+
+lrb.scenario(n, a="_12")  "Scenario 12"
+smpl @all
+beta = 0
+smpl 1900 @last
+mu_e = 0
+mu_w = 0
+smpl @all
+lrb.solve
+smpl @all
+beta = 0.1
+mu_e = 0.1
+mu_w = 0.2
+
+smpl 1850 @last
+' plot west gdp
+plot y_w_11/445.52 y_w_12/410.32
+' plot east gdp
+plot y_e_11/470.25 y_e_12/522.49
+' plot aggregate gdp
+plot y_11/915.78  y_12/932.81
+'plot net export for west
+plot (x_w_11-im_w_11)/y_w_11 (x_w_12-im_w_12)/y_w_12
