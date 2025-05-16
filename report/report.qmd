@@ -1,0 +1,18 @@
+---
+title: "Does remittance stabilize external shocks? Results from a Two-Region SFC model"
+format: 
+    pdf:
+        documentclass: article 
+        number-sections: true
+        margin-top: 1in
+        margin-bottom: 1in
+        margin-left: 1in
+        margin-right: 1in
+        linestretch:  1.2
+        fontsize: 12pt
+        author: "Chenning Xu"
+        fig-pos: "H"
+bibliography: ref.bib
+---
+
+# Introduction
