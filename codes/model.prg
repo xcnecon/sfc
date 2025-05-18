@@ -1,11 +1,14 @@
+' Please avoid running the entire program as it produces too many plots. Please run each scenario one by one.
 ' -----------------------------------------------------------
 ' Model Setup and Variable Declarations
 ' -----------------------------------------------------------
+' Create a new workfile for the model, quarterly frequency, from 1500 to 2100
 wfcreate(wf=lrb, page=quarter) a 1500 2100
 
 ' -----------------------------
 ' Exogenous Variables (Parameters)
 ' -----------------------------
+' Declare all exogenous (parameter) series used in the model, with display names for clarity
 series theta              ' Tax rate
 theta.displayname Tax rate
 series alpha_0_e          ' Autonomous consumption (East)
@@ -86,6 +89,7 @@ lambda_34_w.displayname Effect of income-to-wealth ratio on bill demand (West)
 ' -----------------------------
 ' Stock Variables (Levels)
 ' -----------------------------
+' Declare all stock (level) variables, representing balance sheet items for each sector
 series m_e                ' Bank deposit held by east households
 m_e.displayname Bank deposit held by east households
 series m_w                ' Bank deposit held by west households
@@ -128,6 +132,7 @@ v_w.displayname Net worth of west households
 ' -----------------------------
 ' Flow Variables (Period Flows)
 ' -----------------------------
+' Declare all flow variables, representing period-by-period transactions and flows
 series c_e                ' Consumption of east households
 c_e.displayname Consumption of east households
 series c_w                ' Consumption of west households
@@ -190,6 +195,7 @@ int_d.displayname Interest received on deposits
 ' -----------------------------------------------------------
 ' Initialization: Set all variables to 0 for all periods
 ' -----------------------------------------------------------
+' Set all flow and stock variables to zero for all periods to ensure clean initialization
 smpl @all
 ' Flow variables
 c_e = 0
@@ -245,6 +251,7 @@ v_w = 0
 ' -----------------------------------------------------------
 ' Set Baseline Values for Exogenous Parameters
 ' -----------------------------------------------------------
+' Assign baseline (default) values to all exogenous parameters for the initial scenario
 smpl @all
 ' exogenous variables
 theta = 0.2
@@ -285,16 +292,19 @@ lambda_33_w = 0.02
 ' -----------------------------------------------------------
 ' Model Definition and Equations
 ' -----------------------------------------------------------
+' Define the model structure and behavioral/accounting equations
 model lrb
 
 ' Add behavioral and accounting equations to the model
 ' --- Household Consumption Equations ---
+' East and West household consumption as a function of income, remittance, interest, and wealth
 lrb.append c_e = alpha_0_e + (wb_e - nt)*(1-theta)*alpha_1_e + (r_d(-1)*m_e(-1) + r_b(-1)*b_e(-1))*(1-theta)*alpha_3_e + v_e*alpha_4_e
 lrb.append c_w = alpha_0_w + (1-theta)*(alpha_1_w * wb_w + alpha_2_w * nt + alpha_3_w * (r_d(-1)*m_w(-1) + r_b(-1)*b_w(-1))) + alpha_4_w * v_w
 lrb.append wb_e = y_e - r_l(-1) * l_e(-1) - af_e
 lrb.append wb_w = y_w - r_l(-1) * l_w(-1) - af_w
 
 ' --- Capital and Investment Equations ---
+' Capital accumulation, depreciation, and investment adjustment for East and West
 lrb.append r_d = r_l
 lrb.append af_e = delta * k_e(-1)
 lrb.append af_w = delta * k_w(-1)
@@ -312,6 +322,7 @@ lrb.append l = l_e + l_w
 lrb.append k_tot = k_e + k_w
 
 ' --- Trade and Transfers ---
+' Imports, exports, and remittance flows between East and West
 lrb.append im_e = mu_e * y_e
 lrb.append im_w = mu_w * y_w
 lrb.append x_e = im_w
@@ -319,10 +330,12 @@ lrb.append x_w = im_e
 lrb.append nt = (wb_e*(1-theta)* beta) * (wb_e > 0)   ' Remittance from east to west
 
 ' --- Interest Payments ---
+' Calculate interest paid on loans and received on deposits
 lrb.append int_l = r_l(-1) * l_w(-1) + r_l(-1) * l_e(-1)
 lrb.append int_d = r_d(-1) * m_w(-1) + r_d(-1) * m_e(-1)
 
 ' --- Government and Output ---
+' Output, taxes, and government spending for each region and in aggregate
 lrb.append y_e = c_e + i_e + g_e + x_e - im_e
 lrb.append y_w = c_w + i_w + g_w + x_w - im_w
 lrb.append y = y_e + y_w
@@ -352,13 +365,14 @@ lrb.append h = b_cb + m_cb
 ' -----------------------------------------------------------
 ' Baseline Model Solution
 ' -----------------------------------------------------------
+' Solve the model for the baseline scenario (no shocks, default parameters)
 smpl 1701 @last
 lrb.solve
 
 ' -----------------------------------------------------------
 ' Scenario Analysis: Remittance and Shocks in the West
 ' -----------------------------------------------------------
-' Scenario 1: Shock to government spending in the West with remittance
+' Scenario 1: Negative shock to government spending in the West, with remittance active
 lrb.scenario(o, a="_1")  "Scenario 1"
 smpl 1900 @last
 ' Apply negative shock to west government spending
@@ -369,7 +383,7 @@ smpl 1900 @last
 ' Restore west government spending
 g_w = 50
 
-' Scenario 2: Same shock, but with remittance turned off (beta = 0)
+' Scenario 2: Same shock as Scenario 1, but with remittance turned off (beta = 0)
 lrb.scenario(n, a="_2")  "Scenario 2"
 smpl @all
 beta = 0
@@ -384,28 +398,29 @@ g_w = 50
 
 ' Plot results for Scenarios 1 and 2
 smpl 1850 @last
-' Plot west GDP (normalized)
+' Plot normalized West GDP for both scenarios
 plot y_w_1/358.46 y_w_2/302.50
-' Plot remittance
+' Plot remittance for Scenario 1
 plot nt_1
-' Plot east GDP (normalized)
+' Plot normalized East GDP for both scenarios
 plot y_e_1/571.28 y_e_2/650.16
-' Plot aggregate GDP (normalized)
+' Plot normalized aggregate GDP for both scenarios
 plot y_1/929.75  y_2/952.67
 ' -----------------------------------------------------------
 
 ' Scenario Analysis: Remittance and Shocks in the East
 ' -----------------------------------------------------------
-' Scenario 3: Shock to government spending in the East with remittance
+' Scenario 3: Negative shock to government spending in the East, with remittance active
 lrb.scenario(n, a="_3")  "Scenario 3"
 smpl 1900 @last
 g_e = 90
 smpl @all
 lrb.solve
 smpl 1900 @last
+' Restore east government spending
 g_e = 100
 
-' Scenario 4: Same shock, but with remittance turned off (beta = 0)
+' Scenario 4: Same shock as Scenario 3, but with remittance turned off (beta = 0)
 lrb.scenario(n, a="_4")  "Scenario 4"
 smpl @all
 beta = 0
@@ -414,20 +429,25 @@ g_e = 90
 smpl @all
 lrb.solve
 smpl @all
+' Restore parameters
 beta = 0.1
 g_e = 100
 
 ' Plot results for Scenarios 3 and 4
 smpl 1850 @last
+' Plot normalized West GDP for both scenarios
 plot y_w_3/358.46 y_w_4/302.50   ' West GDP
+' Plot remittance for Scenario 3
 plot nt_3                        ' Remittance
+' Plot normalized East GDP for both scenarios
 plot y_e_3/571.28 y_e_4/650.16   ' East GDP
+' Plot normalized aggregate GDP for both scenarios
 plot y_3/929.75  y_3/952.67      ' Aggregate GDP
 ' -----------------------------------------------------------
 
 ' Scenario Analysis: Remittance and Embargo Impact
 ' -----------------------------------------------------------
-' Scenario 5: Embargo (imports set to zero) with remittance
+' Scenario 5: Embargo (imports set to zero) with remittance active
 lrb.scenario(n, a="_5")  "Scenario 5"
 smpl 1900 @last
 mu_e = 0
@@ -435,6 +455,7 @@ mu_w = 0
 smpl @all
 lrb.solve
 smpl 1900 @last
+' Restore import propensities
 mu_e = 0.1
 mu_w = 0.2
 
@@ -448,20 +469,28 @@ mu_w = 0
 smpl @all
 lrb.solve
 smpl @all
+' Restore parameters
 beta = 0.1
 mu_e = 0.1
 mu_w = 0.2
 
 ' Plot results for Scenarios 5 and 6
 smpl 1850 @last
+' Plot normalized West GDP for both scenarios
 plot y_w_5/358.46 y_w_6/302.50   ' West GDP
+' Plot normalized East GDP for both scenarios
 plot y_e_5/571.28 y_e_6/650.16   ' East GDP
+' Plot remittance for Scenario 5
 plot nt_5                        ' Remittance
+' Plot normalized aggregate GDP for both scenarios
 plot y_5/929.75  y_6/952.67      ' Aggregate GDP
+' Plot normalized net export for West
 plot (x_w_5-im_w_5)/y_w_5 (x_w_6-im_w_6)/y_w_6   ' Net export for west
 ' -----------------------------------------------------------
 
 ' Additional Scenario: Equalize Import Propensity
+' -----------------------------------------------------------
+' Set import propensities equal for both regions for further analysis
 smpl @all
 mu_w = 0.2
 mu_e = 0.2
@@ -469,7 +498,7 @@ mu_e = 0.2
 
 ' Repeat Scenario Analysis with Different Baseline (for robustness)
 ' -----------------------------------------------------------
-' Scenarios 7-12 repeat the above shocks with different normalization or parameterization
+' Scenarios 7-12: Repeat the above shocks with different normalization or parameterization for robustness checks
 ' (see above for scenario structure; comments omitted for brevity)
 
 lrb.scenario(n, a="_7")  "Scenario 7"
@@ -478,6 +507,7 @@ g_w = 40
 smpl @all
 lrb.solve
 smpl 1900 @last
+' Restore west government spending
 g_w = 50
 
 lrb.scenario(n, a="_8")  "Scenario 8"
@@ -488,25 +518,27 @@ g_w = 40
 smpl @all
 lrb.solve
 smpl @all
+' Restore parameters
 beta = 0.1
 g_w = 50
 
 smpl 1850 @last
-' plot west gdp
+' Plot normalized West GDP for both scenarios
 plot y_w_7/445.52 y_w_8/410.32
-' plot east gdp
+' Plot normalized East GDP for both scenarios
 plot y_e_7/470.25 y_e_8/522.49
-' plot aggregate gdp
+' Plot normalized aggregate GDP for both scenarios
 plot y_7/915.78  y_8/932.81
 ' -----------------------------------------------------------
 
-' Scenario does remittance amply shocks in the east? 
+' Scenario: Does remittance amplify shocks in the east?
 lrb.scenario(n, a="_9")  "Scenario 9"
 smpl 1900 @last
 g_e = 90
 smpl @all
 lrb.solve
 smpl 1900 @last
+' Restore east government spending
 g_e = 100
 
 lrb.scenario(n, a="_10")  "Scenario 10"
@@ -517,15 +549,16 @@ g_e = 90
 smpl @all
 lrb.solve
 smpl @all
+' Restore parameters
 beta = 0.1
 g_e = 100
 
 smpl 1850 @last
-' plot west gdp
+' Plot normalized West GDP for both scenarios
 plot y_w_9/445.52 y_w_10/410.32
-' plot east gdp
+' Plot normalized East GDP for both scenarios
 plot y_e_9/470.25 y_e_10/522.49
-' plot aggregate gdp
+' Plot normalized aggregate GDP for both scenarios
 plot y_9/915.78  y_10/932.81
 ' -----------------------------------------------------------
 
@@ -537,6 +570,7 @@ mu_w = 0
 smpl @all
 lrb.solve
 smpl 1900 @last
+' Restore import propensities
 mu_e = 0.1
 mu_w = 0.2
 
@@ -549,23 +583,26 @@ mu_w = 0
 smpl @all
 lrb.solve
 smpl @all
+' Restore parameters
 beta = 0.1
 mu_e = 0.1
 mu_w = 0.2
 
 smpl 1850 @last
-' plot west gdp
+' Plot normalized West GDP for both scenarios
 plot y_w_11/445.52 y_w_12/410.32
-' plot east gdp
+' Plot normalized East GDP for both scenarios
 plot y_e_11/470.25 y_e_12/522.49
-' plot aggregate gdp
+' Plot normalized aggregate GDP for both scenarios
 plot y_11/915.78  y_12/932.81
-'plot net export for west
+' Plot normalized net export for West
 plot (x_w_11-im_w_11)/y_w_11 (x_w_12-im_w_12)/y_w_12
 
 ' -----------------------------------------------------------
 
 ' Scenario: Demand shock in west
+' -----------------------------------------------------------
+' Demand shock in the West with a lower propensity to consume out of remittance income
 lrb.scenario(n, a="_13")  "Scenario 13"
 smpl @all
 mu_e = 0.2
@@ -576,6 +613,7 @@ g_w = 40
 smpl @all
 lrb.solve
 smpl @all
+' Restore parameters
 mu_e = 0.1
 mu_w = 0.2
 alpha_2_w = 0.9
@@ -592,6 +630,7 @@ g_w = 40
 smpl @all
 lrb.solve
 smpl @all
+' Restore parameters
 mu_e = 0.1
 mu_w = 0.2
 alpha_2_w = 0.9
@@ -599,11 +638,11 @@ g_w = 50
 beta = 0.1
 
 smpl 1850 @last
-' plot west gdp
+' Plot normalized West GDP for both scenarios
 plot y_w_13/451.76 y_w_14/410.329
-' plot east gdp
+' Plot normalized East GDP for both scenarios
 plot y_e_13/473.42 y_e_14/522.485
-' plot aggregate gdp
+' Plot normalized aggregate GDP for both scenarios
 plot y_13/925.18  y_14/932.815
-' compare with ealier scenario
+' Compare with earlier scenario
 plot y_w_7/445.52  y_w_13/451.76  y_w_14/410.329
