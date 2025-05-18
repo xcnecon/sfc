@@ -565,7 +565,7 @@ plot (x_w_11-im_w_11)/y_w_11 (x_w_12-im_w_12)/y_w_12
 
 ' -----------------------------------------------------------
 
-' Scenario: Does Remittance affect the impact of an embargo?
+' Scenario: Demand shock in west
 lrb.scenario(n, a="_13")  "Scenario 13"
 smpl @all
 mu_e = 0.2
@@ -607,47 +607,3 @@ plot y_e_13/473.42 y_e_14/522.485
 plot y_13/925.18  y_14/932.815
 ' compare with ealier scenario
 plot y_w_7/445.52  y_w_13/451.76  y_w_14/410.329
-
-' -----------------------------------------------------------
-' Scenario: Does Remittance affect the impact of an embargo?
-lrb.scenario(n, a="_15")  "Scenario 15"
-smpl @all
-mu_e = 0.2
-mu_w = 0.2
-alpha_2_w = 0.6
-smpl 1900 @last
-mu_e = 0
-mu_w = 0
-smpl @all
-lrb.solve
-smpl @all
-mu_e = 0.1
-mu_w = 0.2
-alpha_2_w = 0.9
-
-lrb.scenario(n, a="_16")  "Scenario 16"
-smpl @all
-mu_e = 0.2
-mu_w = 0.2
-alpha_2_w = 0.6
-beta = 0
-smpl 1900 @last
-mu_e = 0
-mu_w = 0
-smpl @all
-lrb.solve
-smpl @all
-mu_e = 0.1
-mu_w = 0.2
-alpha_2_w = 0.9
-beta = 0.1
-
-smpl 1850 @last
-' plot west gdp
-plot y_w_15/451.76 y_w_16/410.329
-' plot east gdp
-plot y_e_15/473.42 y_e_16/522.485
-' plot aggregate gdp
-plot y_15/925.18  y_16/932.815
-' compare with ealier scenario
-plot y_w_11/445.52  y_w_15/451.76  y_w_16/410.329

@@ -1,5 +1,5 @@
 ---
-title: "Does remittance stabilize external shocks? Results from a Two-Region SFC model"
+title: "Does remittance stabilize external shocks? Results from a two-region SFC model"
 format: 
     pdf:
         documentclass: article 
@@ -9,10 +9,220 @@ format:
         margin-left: 1in
         margin-right: 1in
         linestretch:  1.2
-        fontsize: 12pt
+        fontsize: 10pt
         author: "Chenning Xu"
         fig-pos: "H"
 bibliography: ref.bib
 ---
 
 # Introduction
+Regional development imbalances represent a common phenomenon in many countries, with prominent examples including the coastal-inland disparity in China and the North-South gap in Italy [@liao_sixty_2016; @stefen_unequal_italy]. Such regional disparities frequently coincide with internal migration from poorer regions toward wealthier areas, accompanied by remittance flows back to migrants' regions of origin. However, aside from a well-established body of literature on international remittances, relatively few studies have examined how intra-national (regional) remittances affect economic dynamics. Regions in a country tend to be more interdependent than independent countries, and studying the impact of remittance flows on regional economic dynamics could provide important insights for policymaking.
+
+This paper presents an extension of the regional model developed by @godley_lavoie Chapter 6 to explore the impact of regional remittance flows on economic dynamics, particularly assessing whether these flows stabilize or amplify the effects of various policy shocks. Within the specific model structure employed here, the analysis demonstrates that remittance flows generally amplify short-term economic fluctuations following exogenous shocks, and the extent of amplification depends on the sensitivity of consumption to remittance income in the recipient region. Moreover, the long-term effects of remittances on regional economies depend critically on the specific context and nature of the shocks considered.
+
+# Literature Review
+A substantial body of literature has investigated the macroeconomic impacts of international remittances, particularly their effects on economic growth and stability. Studies employing general equilibrium frameworks, such as those by @fullenkamp_macroeconomic_2008 and @guha_macroeconomic_2013, indicate mixed results regarding the impact of remittances on economic growth in recipient countries. On the one hand, remittances enhance short-term household welfare by increasing disposable income and consumption, particularly in the non-tradable sector. On the other hand, these transfers reduce labor supply incentives, as households receiving remittances have less necessity to engage in employment. Moreover, substantial remittance inflows in foreign currencies can lead to real exchange rate appreciation, undermining export competitiveness and discouraging productive investments. This adverse long-term growth impact is commonly identified as the "Dutch disease" effect.
+
+With respect to economic stability, @fullenkamp_macroeconomic_2008 finds that remittance flows are positively correlated with economic conditions in the remitting countries, as migrants' capacity and willingness to remit depend heavily on their own economic circumstances. Similarly, @kristin_latin_america demonstrates that remittance flows from the U.S. to Latin American countries strongly correlate with the economic performance of the specific U.S. regions where Latin American migrants are concentrated. Both @fullenkamp_macroeconomic_2008 and @kristin_latin_america also emphasize that remittance flows are negatively correlated with the economic performance of recipient countries, thus acting counter-cyclically by increasing when recipient economies experience downturns. Nonetheless, research by @snudden_international_2017 highlights that whether remittance flows stabilize or destabilize recipient economies following shocks largely depends on the specific context and characteristics of the shocks involved.
+
+Relatively few studies have examined the role of inter-regional remittance flows in shaping economic dynamics. Notably, @mora_rivera_regional_2024 found that household health expenditure in Mexico's poorer regions positively correlates with remittance inflows, originating from both domestic and international sources.
+
+Building upon this literature gap, the present study employs a two-region Stock-Flow Consistent (SFC) model to analyze how inter-regional remittance flows influence regional economic dynamics. Specifically, this paper investigates how remittance flows modify the regional responses to policy shocks, assessing whether these transfers amplify or stabilize economic fluctuations in both remitting and recipient regions.
+
+# Model Structure
+## Overview
+::: {#fig-bs}
+
+![](../output/report/bs.png)
+
+Balance Sheet Matrix
+:::
+
+The model separates the economy into two distinct regional sectors, East and West, each consisting of a household sector and a production sector. Households accumulate wealth in the form of cash, government bills, and bank deposits. Firms within each region undertake investment in fixed capital financed primarily through bank loans. Banks, in turn, provide these loans to firms and simultaneously create money deposits, which households hold as financial assets. Both firms and banks are fully owned by households, thus ensuring that all profits generated through production and financial intermediation are returned to households in the form of wages and interest on money deposits. The central bank issues currency by conducting open market operations, specifically through the purchase of government-issued bills. Consistent with typical modeling conventions, the central bank maintains zero net worth and transfers all accrued profits directly to the government. The government finances its expenditures on goods and services purchased from firms by issuing bills to cover any resulting fiscal deficits.
+
+::: {#fig-tf}
+
+![](../output/report/tf.png)
+
+Transaction Flows Matrix
+:::
+
+The transaction flow matrix is largely self-explanatory. However, it is important to clarify certain simplifying assumptions underlying this model. Specifically, the model assumes that households and firms purchase final products exclusively from firms within their own region. Cross-regional trade is limited to intermediate goods, which firms import from the other region. In this context, inter-regional remittance flows are defined as net transfers, and the direction of these transfers is assumed to be one-way: from the East, where GDP is higher and the migrants reside, to the West. This assumption captures the typical flow of remittances from economically prosperous regions to relatively poorer areas.
+
+## Behavioral Equations
+*Consumption functions:*
+$$ C^E = \alpha_0^E + (WB^E - NT)(1-\theta)\alpha_1^E + (r_{d-1}M^E_{-1} + r_{b-1}B^E_{-1})(1-\theta)\alpha_3^E + \alpha_4^E V^E_{-1} \tag{1}$$
+$$ C^W = \alpha_0^W + (1-\theta)[\alpha_1^W WB^W + \alpha_2^W NT + \alpha_3^W (r_{d-1}M^W_{-1} + r_{b-1}B^W_{-1})] + \alpha_4^W V^W_{-1} \tag{2} $$
+
+The consumption functions include an autonomous consumption term and incorporate distinct propensities to consume out of different sources of income and accumulated wealth. Specifically, the model assumes that households exhibit a higher marginal propensity to consume out of wage income compared to interest income. Furthermore, the propensity to consume out of remittance flows is initially set as the highest among all income sources. To test the sensitivity of the model's outcomes, a lower value for the remittance consumption propensity is also examined as part of the robustness check.
+
+*Remittance function:*
+$$NT = \beta \cdot (1-\theta) \cdot \max(0, WB^E) \tag{3}$$
+
+Remittance flows are specified as a linear function of after-tax wage income in the East region. The rationale behind this specification is that migrants' income predominantly originates from wages earned in the host region. Consequently, this modeling choice implies that remittance flows are pro-cyclical with respect to economic conditions in the East. Notably, this specification does not assume that remittance is counter-cyclical in the West as some literature has suggested. 
+
+*Production and investment:*
+$$Y = C + I + G + X - IM \tag{4}$$
+$$WB = Y - r_{l-1} \cdot L - AF \tag{5}$$
+$$AF = \delta \cdot K_{-1} \tag{6}$$
+$$K^T = k_{ratio} \cdot Y_{-1} \tag{7}$$
+$$I = \max(0, \gamma \cdot (K^T - K_{-1}) + AF) \tag{8}$$
+$$IM = \mu \cdot Y \tag{9}$$
+$$X = IM \tag{10}$$
+
+These functions follow the standard setup in @godley_lavoie Chapter 7. Investment is a function of the difference between the target capital stock and the actual capital stock, plus depreciation. The target capital stock is a constant fraction of the previous period's output. The wage is the residual after accounting for interest payments on debt and depreciation of the capital stock.
+
+In the baseline model, it is assumed that the West has a higher propensity to import than the East as the East has a higher production capacity, but this assumption is relaxed in robusteness check. 
+
+*Banks:*
+$$\Delta L = I - AF \tag{ 11}$$
+$$L = L_{-1} + \Delta L \tag{12}$$
+$$M = L \tag{13}$$
+
+*Government:* 
+$$\Delta B = G + r_{b-1} B_{-1} - T - (r_{b-1} B^{CB}_{-1} + r_{d-1} M^{CB}_{-1}) \tag{14}$$
+$$H = B^{CB} + M^{CB} \tag{15}$$
+
+*Portfolio decisions:*
+$$DI = WB + r_{d-1} M_{-1} + r_{b-1} B_{-1} - NT - T \tag{16}$$
+$$V = V_{-1} + DI - C \tag{17}$$
+$$\frac{M_h}{V} = \lambda_{20} + \lambda_{22} r_d + \lambda_{23} r_b \tag{18}$$
+$$\frac{B_h}{V} = \lambda_{30} + \lambda_{32} r_d + \lambda_{33} r_b \tag{19}$$
+$$H_h = V - M_h - B_h \tag{20}$$
+$$B^{CB} = B - B_h^W - B_h^E \tag{21}$$
+$$M^{CB} = M - M_h^W - M_h^E \tag{22}$$
+
+The central bank is assumed to be fully accommodative in this model. After households complete their portfolio decisions, the central bank purchases the remaining bills and supplies deposits to meet households' demand for cash.
+
+*Redundant equations:*
+$$H = H_h^E + H_h^W \tag{23}$$
+
+As $H$ is defined in by adding up the assets of the central bank, this definition is redundant. However, it must hold true as the system is stock-flow consistent and closed. This equation is true throughout this paper. 
+
+## Parameters
+
+::: {#tbl-parameters}
+
+| Parameter      | Value | Parameter      | Value | Parameter      | Value | Parameter      | Value |
+|----------------|-------|---------------|-------|---------------|-------|---------------|-------|
+| $\theta$         | 0.2   | $\alpha_0^E$     | 20    | $\alpha_0^W$     | 20    | $\alpha_1^E$     | 0.6   |
+| $\alpha_1^W$     | 0.8   | $\alpha_2^W$     | 0.9   | $\alpha_3^E$     | 0.5   | $\alpha_3^W$     | 0.5   |
+| $\alpha_4^E$     | 0.1   | $\alpha_4^W$     | 0.1   | $\delta$         | 0.1   | $k_{ratio}^E$    | 2     |
+| $k_{ratio}^W$    | 2     | $\gamma$         | 0.2   | $\mu^E$          | 0.1   | $\mu^W$          | 0.2   |
+| $\beta$          | 0.1   | $g^E$            | 100   | $g^W$            | 50    | $r_d$            | 0.02  |
+| $r_l$            | 0.02  | $r_b$            | 0.04  | $\lambda_{20}^E$ | 0.4   | $\lambda_{20}^W$ | 0.4   |
+| $\lambda_{22}^E$ | 0.02  | $\lambda_{22}^W$ | 0.02  | $\lambda_{23}^E$ | -0.02 | $\lambda_{23}^W$ | -0.02 |
+| $\lambda_{30}^E$ | 0.4   | $\lambda_{30}^W$ | 0.4   | $\lambda_{32}^E$ | -0.02 | $\lambda_{32}^W$ | -0.02 |
+| $\lambda_{33}^E$ | 0.02  | $\lambda_{33}^W$ | 0.02  |                 |       |                 |       | 
+
+Baseline Parameters Table
+:::
+
+Notably, the developmental imbalance is achieved by a difference in the autonomous government spending in the pre-shock steady state, with $g^E = 100$ and $g^W = 50$. 
+
+# Scenario Analysis
+To understand the impact of remittance flow on policy shocks, this section conducts a series of scenario analysis and compares the baseline results (with remittance flows, $\beta=0.1$) with the results from the benchmark model (without remittance flows, $\beta = 0$). All level variables are indexed to 1 before the shock.
+
+## Demand shock in the west
+In this scenario, the goverment spending in west decreases from 50 to 40 in period 00. 
+
+::: {#fig-demand-shock-west}
+
+![](../output/report/img1.png)
+
+Demand Shock in the West: Regional GDP
+:::
+
+The results indicate that, with remittance flows, the long-term impact of the demand shock on GDP in the West is smaller in percentage terms compared to the benchmark model without remittances. This outcome is intuitive, as remittances reduce the West's reliance on government demand. In contrast, the long-term effect of the demand shock on GDP in the East remains minimal regardless of remittance flows.
+
+However, it is noteworthy that in both regions, remittances increase short-term GDP volatility following the shock and extend the time required to reach a new steady state. This finding challenges the common view that remittances stabilize the economy. It suggests that if remittances are not compensatory to the economic conditions of the recipient region, they may amplify short-term fluctuations rather than dampen them.
+
+::: {#fig-demand-shock-west}
+
+![](../output/report/img2.png)
+
+Demand Shock in the West: Aggregate GDP and Remittance
+:::
+
+The short-run shock amplification is also evident at the aggregate level. While the long-term difference in GDP with and without remittance flows is minimal, short-term fluctuations are noticeably larger in the presence of remittances. The mechanism behind this short-run procyclical behavior lies in interregional trade. A demand shock in the West leads to changes in its imports from the East, transmitting the shock across regions. The resulting change in the East’s GDP then affects remittance flows, which in turn feed back into the West’s GDP, amplifying short-term fluctuations.
+
+## Demand shock in the east
+In this scenario, the goverment spending in east decreases from 100 to 90 in period 00. 
+
+::: {#fig-demand-shock-east}
+
+![](../output/report/img3.png)
+
+Demand Shock in the East: Regional GDP
+:::
+
+The results show that when the demand shock occurs in the East, the long-term impact on GDP in the West is larger in percentage terms with remittance flows than without. The long-term impact on the GDP in the East is minimal regardless of remittance flows.
+
+The results show that when the demand shock originates in the East, the long-term impact on GDP in the West is larger in percentage terms when remittance flows are present, compared to the scenario without remittances. In contrast, the long-term effect on GDP in the East remains minimal regardless of the presence of remittances.
+
+Short-term fluctuations are also more pronounced with remittance flows, consistent with the findings from the previous scenario. The mechanism behind this short-run procyclical behavior remains the same. Without remittance, the only channel for the shock transmission is through interregional trade, while remittance serves as a second inter-regional procyclical channel. 
+
+::: {#fig-demand-shock-east}
+
+![](../output/report/img4.png)
+
+Demand Shock in the East: Aggregate GDP and Remittance
+:::
+
+## Embargo shock
+In this scenario, there is an embargo on trade between the two regions in period 00. 
+
+::: {#fig-embargo-shock}
+
+![](../output/report/img5.png)
+
+Embargo Shock: Regional GDP
+:::
+
+The post-shock series in this scenario show surprising percunilarities. In the West, after the embargo, the GDP turns into a constant cycical pattern. With remittance, the cycles have larger amplitude, and the cyclical average is higher than without remittance. While in the East, GDP declined considerably after the embargo with remittance but it rises to a higher level than without remittance. While identifying the exact mechanisms behind the increased amplitude of cycles requires further mathematical investigation, the reasons underlying the higher cyclical average GDP in the West and the comparatively lower long-run GDP in the East are more readily apparent.
+
+::: {#fig-embargo-shock-net-export}
+
+![](../output/report/img6.png)
+
+Embargo Shock: Aggregate GDP and West Net Export 
+:::
+
+Prior to the embargo, the West runs a trade deficit equal to approximately 4% of its GDP when remittance flows are present, whereas it achieves a trade surplus of around 1.5% in the absence of remittances. This indicates that remittance inflows are effectively financing the West’s trade deficit. Following the embargo, however, the trade balances in both regions swiftly converge to zero due to the elimination of interregional trade. The cessation of this demand leakage leads to a notable increase in GDP for the West, while the East experiences a corresponding decline. Although remittances from the East diminish in response to the embargo, the negative impact of reduced transfer income on the West is more than compensated for by the gains arising from an improved trade balance. Consequently, the overall effect on the West’s GDP remains positive.
+
+# Robustness Check
+In this section, the assumption that the West has a higher import propensity than the East is relaxed. Likewise, the assumption that remittance income exhibits the highest marginal propensity to consume is also relaxed.
+
+## Equal propensity to import in both regions
+Makeing the propensity to import equal (0.2) in both regions do not alter the results. Only the demand shock in the west scenario is shown here. 
+
+::: {#fig-equal-import-propensity}
+
+![](../output/report/img7.png)
+
+Basline vs Equal Import Propensity
+:::
+
+In both models, the long-term GDP in the West is higher with remittance flows than without. The post-shock fluctuations are amplified with remittance flows than without. 
+
+## Lower propentisity to consume out of remittance income
+In this scenario, the propensities to import in both regions are still equal at 0.2, but the propensity to consume out of remittance income in the west is reduced to 0.6 from 0.9 in the baseline model. 
+
+::: {#fig-lower-remittance-consumption-propensity}
+
+![](../output/report/img8.png)
+
+Baseline vs Lower Remittance Consumption Propensity vs Benchmark
+:::
+
+The findings remain consistent even when the marginal propensity to consume out of remittance income is lower. However, the increase in post-shock volatility is smaller than in the baseline model, a pattern observed in the GDP of both regions. This supports the earlier argument that remittances amplify short-run shocks and further indicates that greater sensitivity of consumption to remittance flows enhances this amplifying effect. In contexts where only households with the highest propensity to consume generate migrants who remit income to support their families, the shock-amplifying impact of remittances would be even more pronounced.
+
+# Implications and Conclusion
+To conclude, this paper employs a two-region stock-flow consistent (SFC) model to investigate the effects of remittance flows on regional economic responses to policy shocks. The results show that remittances—modeled as a positive function of the remitting region’s GDP—tend to amplify short-run economic fluctuations following shocks. Whether remittances mitigate or exacerbate the long-term effects of shocks depends critically on the nature of the shocks themselves. This finding stands in contrast to the common view in the international remittance literature, which often emphasizes the stabilizing role of remittances. In the regional context analyzed here, the two regions are far more interdependent through trade than two sovereign countries, altering the dynamics significantly.
+
+For countries where intra-national remittance flows are substantial, policymakers should be mindful of the destabilizing potential of these flows when designing or implementing macroeconomic policies. As a hypothetical example, consider a situation in which a housing bubble emerges in the eastern region, prompting the government to implement measures to curb residential investment. A decline in GDP in the East may reduce remittance flows to the West, leading to a significant contraction in West GDP and potentially undermining the basic welfare of Western households. At the same time, weakened demand in the West would reduce export demand for the East, further compounding the initial economic decline triggered by the housing market intervention. This feedback loop underscores the importance of incorporating regional remittance dynamics into policy analysis.
+
+This study is highly preliminary, and several avenues for future research warrant exploration. One potential extension is to model remittance flows as a negative function of the recipient region’s GDP, in addition to being a positive function of the remitting region’s GDP. This would allow the model to capture the counter-cyclical nature of remittance flows often observed in the recipient region and to examine whether, or under what conditions, remittances might stabilize the economy following exogenous shocks. Another promising direction is to reduce the dependence of remittance flows on the contemporaneous GDP of the remitting region, making them more persistent, sticky, or forward-looking. Such modifications could help assess whether the amplifying effects of remittances observed in this study are sensitive to the assumed behavioral dynamics. Overall, more research is needed to deepen our understanding of the role of remittances in regional economic stability.
+
+
+# References
